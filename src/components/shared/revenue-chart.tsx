@@ -84,17 +84,27 @@ export function RevenueChart() {
   if (data.length === 0) return null;
 
   return (
-    <div className="rounded-xl border bg-card shadow-card-sm p-4">
+    <div className="rounded-xl glass-card p-4">
       <ResponsiveContainer width="100%" height={200}>
         <BarChart data={data} margin={{ top: 4, right: 4, bottom: 0, left: -20 }}>
+          <defs>
+            <linearGradient id="barGradientToday" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="hsl(32, 85%, 50%)" stopOpacity={1} />
+              <stop offset="100%" stopColor="hsl(32, 85%, 38%)" stopOpacity={0.7} />
+            </linearGradient>
+            <linearGradient id="barGradientDefault" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="hsl(30, 10%, 88%)" stopOpacity={0.8} />
+              <stop offset="100%" stopColor="hsl(30, 10%, 88%)" stopOpacity={0.4} />
+            </linearGradient>
+          </defs>
           <XAxis
             dataKey="label"
-            tick={{ fontSize: 11, fill: "#57534E" }}
+            tick={{ fontSize: 11, fill: "hsl(25, 8%, 32%)" }}
             axisLine={false}
             tickLine={false}
           />
           <YAxis
-            tick={{ fontSize: 10, fill: "#57534E" }}
+            tick={{ fontSize: 10, fill: "hsl(25, 8%, 32%)" }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v) => `R${Math.round(v / 100)}`}
@@ -102,10 +112,12 @@ export function RevenueChart() {
           <Tooltip
             formatter={(value) => [formatZAR(Number(value)), "Revenue"]}
             contentStyle={{
-              background: "white",
-              border: "1px solid #E7E5E4",
-              borderRadius: "8px",
-              boxShadow: "0 2px 8px rgba(28, 25, 23, 0.08)",
+              background: "rgba(255, 252, 247, 0.85)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+              border: "1px solid rgba(255, 255, 255, 0.5)",
+              borderRadius: "10px",
+              boxShadow: "0 4px 16px rgba(28, 25, 23, 0.12), inset 0 1px 0 rgba(255,255,255,0.6)",
               fontSize: "12px",
             }}
           />
@@ -113,7 +125,7 @@ export function RevenueChart() {
             {data.map((entry, i) => (
               <Cell
                 key={i}
-                fill={entry.isToday ? "#B45309" : "#E7E5E4"}
+                fill={entry.isToday ? "url(#barGradientToday)" : "url(#barGradientDefault)"}
               />
             ))}
           </Bar>

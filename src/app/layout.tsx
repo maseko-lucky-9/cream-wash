@@ -32,9 +32,13 @@ export default function RootLayout({
           position="top-center"
           toastOptions={{
             style: {
-              background: "white",
-              border: "1px solid hsl(30 6% 90%)",
-              boxShadow: "0 2px 8px rgba(28, 25, 23, 0.08)",
+              background: "rgba(255, 252, 247, 0.85)",
+              backdropFilter: "blur(16px)",
+              WebkitBackdropFilter: "blur(16px)",
+              border: "1px solid rgba(255, 255, 255, 0.5)",
+              boxShadow:
+                "0 4px 16px rgba(28, 25, 23, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.6)",
+              borderRadius: "12px",
             },
           }}
         />

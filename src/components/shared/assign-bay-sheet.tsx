@@ -35,12 +35,13 @@ export function AssignBaySheet({ job, bays, onAssign, onClose }: AssignBaySheetP
     <div className="fixed inset-0 z-50 flex items-end justify-center">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-foreground/30 backdrop-blur-sm"
+        className="absolute inset-0 bg-foreground/20 backdrop-blur-md"
         onClick={onClose}
       />
 
       {/* Sheet */}
-      <div className="relative w-full max-w-lg bg-card rounded-t-2xl shadow-card-lg p-6 pb-8 animate-in slide-in-from-bottom duration-200">
+      <div className="relative w-full max-w-lg rounded-t-2xl shadow-card-lg p-6 pb-8 animate-in slide-in-from-bottom duration-300 ease-out glass-card border-b-0 border-t border-x bg-[rgba(255,252,247,0.85)]">
+        <div className="w-10 h-1 rounded-full bg-muted mx-auto mb-4" />
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-display font-semibold text-foreground">
             Assign to Bay
@@ -75,10 +76,10 @@ export function AssignBaySheet({ job, bays, onAssign, onClose }: AssignBaySheetP
                   key={bay.id}
                   onClick={() => setSelectedBay(bay.id)}
                   className={cn(
-                    "w-full h-[56px] rounded-lg border-2 flex items-center justify-center font-medium text-base transition-all",
+                    "w-full h-[56px] rounded-lg border flex items-center justify-center font-medium text-base transition-all duration-150 hover:-translate-y-px",
                     selectedBay === bay.id
-                      ? "border-accent bg-accent/5 text-accent"
-                      : "border-border text-foreground hover:border-muted-foreground/30"
+                      ? "border-accent/30 glass-card shadow-glow-accent text-accent"
+                      : "border-white/40 glass-surface text-foreground hover:border-white/60"
                   )}
                 >
                   {bay.name}
@@ -89,7 +90,7 @@ export function AssignBaySheet({ job, bays, onAssign, onClose }: AssignBaySheetP
             <button
               onClick={handleAssign}
               disabled={!selectedBay || loading}
-              className="w-full h-[56px] rounded-lg bg-primary text-primary-foreground font-medium flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all disabled:opacity-50"
+              className="w-full h-[56px] rounded-lg glossy-btn text-accent-foreground font-medium flex items-center justify-center gap-2 active:scale-[0.98] transition-all disabled:opacity-50"
             >
               {loading ? (
                 <>

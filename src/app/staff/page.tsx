@@ -152,9 +152,12 @@ export default function StaffPage() {
       : 30;
 
   return (
-    <div className="min-h-screen bg-background pb-8">
+    <div className="min-h-screen bg-background pb-8 relative">
+      {/* Ambient background glow */}
+      <div className="fixed top-0 left-1/4 w-[300px] h-[300px] rounded-full bg-accent/[0.03] blur-[100px] pointer-events-none" aria-hidden="true" />
+      <div className="fixed bottom-1/4 right-1/4 w-[250px] h-[250px] rounded-full bg-cream-300/[0.08] blur-[80px] pointer-events-none" aria-hidden="true" />
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur border-b px-4 py-3">
+      <header className="sticky top-0 z-40 glass-surface border-b border-white/30 px-4 py-3">
         <div className="flex items-center justify-between max-w-lg mx-auto">
           <div>
             <p className="text-sm text-muted-foreground">Welcome back,</p>
@@ -164,7 +167,7 @@ export default function StaffPage() {
           </div>
           <button
             onClick={handleLogout}
-            className="h-10 px-3 rounded-lg border border-border text-sm font-medium text-muted-foreground hover:bg-muted flex items-center gap-2 transition-colors"
+            className="h-10 px-3 rounded-lg glass-surface border-white/30 text-sm font-medium text-muted-foreground hover:bg-white/30 flex items-center gap-2 transition-colors"
           >
             <LogOut className="w-4 h-4" />
             Log Out
@@ -172,60 +175,65 @@ export default function StaffPage() {
         </div>
       </header>
 
-      <main className="max-w-lg mx-auto px-4 mt-6 space-y-6">
-        {/* Bay Board */}
-        <section>
-          <div className="flex items-center gap-2 mb-3">
-            <LayoutGrid className="w-5 h-5 text-muted-foreground" />
-            <h2 className="font-display font-semibold text-lg text-foreground">
-              Bay Board
-            </h2>
-          </div>
-          <div className="space-y-3">
-            {bays.map((bay) => (
-              <BayCard
-                key={bay.id}
-                bay={bay}
-                currentJob={bay.currentJob}
-                onComplete={handleComplete}
-              />
-            ))}
-          </div>
-        </section>
-
-        {/* Queue */}
-        <section>
-          <div className="flex items-center gap-2 mb-3">
-            <Users className="w-5 h-5 text-muted-foreground" />
-            <h2 className="font-display font-semibold text-lg text-foreground">
-              Queue
-            </h2>
-            {queue.length > 0 && (
-              <span className="ml-auto text-sm font-medium text-accent">
-                {queue.length} waiting
-              </span>
-            )}
-          </div>
-
-          {queue.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground">
-              <p className="font-medium">No cars waiting</p>
-              <p className="text-sm mt-1">Cars will appear here when customers check in or book.</p>
+      <main className="max-w-lg md:max-w-3xl mx-auto px-4 mt-6 space-y-6">
+        <div className="md:grid md:grid-cols-2 md:gap-6">
+          {/* Bay Board */}
+          <section>
+            <div className="flex items-center gap-2 mb-3">
+              <LayoutGrid className="w-5 h-5 text-muted-foreground" />
+              <h2 className="font-display font-semibold text-lg text-foreground">
+                Bay Board
+              </h2>
             </div>
-          ) : (
-            <div className="space-y-2">
-              {queue.map((job, i) => (
-                <QueueItem
-                  key={job.id}
-                  job={job}
-                  position={i + 1}
-                  estimatedWait={(i + 1) * avgDuration}
-                  onAssign={(j) => setAssigningJob(j)}
+            <div className="space-y-3">
+              {bays.map((bay) => (
+                <BayCard
+                  key={bay.id}
+                  bay={bay}
+                  currentJob={bay.currentJob}
+                  onComplete={handleComplete}
                 />
               ))}
             </div>
-          )}
-        </section>
+          </section>
+
+          {/* Queue */}
+          <section>
+            <div className="flex items-center gap-2 mb-3">
+              <Users className="w-5 h-5 text-muted-foreground" />
+              <h2 className="font-display font-semibold text-lg text-foreground">
+                Queue
+              </h2>
+              {queue.length > 0 && (
+                <span className="ml-auto text-sm font-medium text-accent">
+                  {queue.length} waiting
+                </span>
+              )}
+            </div>
+
+            {queue.length === 0 ? (
+              <div className="text-center py-12 text-muted-foreground">
+                <div className="w-12 h-12 rounded-full glass-surface flex items-center justify-center mx-auto mb-3">
+                  <Users className="w-6 h-6 text-muted-foreground/50" />
+                </div>
+                <p className="font-medium">No cars waiting</p>
+                <p className="text-sm mt-1">Cars will appear here when customers check in or book.</p>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                {queue.map((job, i) => (
+                  <QueueItem
+                    key={job.id}
+                    job={job}
+                    position={i + 1}
+                    estimatedWait={(i + 1) * avgDuration}
+                    onAssign={(j) => setAssigningJob(j)}
+                  />
+                ))}
+              </div>
+            )}
+          </section>
+        </div>
       </main>
 
       {/* Assign Bay Sheet */}

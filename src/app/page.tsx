@@ -138,16 +138,16 @@ export default function CustomerPage() {
     const dateObj = dates.find((d) => d.value === selectedDate);
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6 text-center">
-        <div className="w-16 h-16 rounded-full bg-status-idle/10 flex items-center justify-center mb-6">
-          <Check className="w-8 h-8 text-status-idle" />
+        <div className="w-20 h-20 rounded-full bg-status-idle/10 flex items-center justify-center mb-6 animate-scale-check">
+          <Check className="w-10 h-10 text-status-idle" strokeWidth={2.5} />
         </div>
-        <h1 className="text-2xl font-display font-bold text-foreground mb-2">
+        <h1 className="text-2xl font-display font-bold text-foreground mb-2 animate-fade-up">
           Booking Confirmed
         </h1>
         <p className="text-muted-foreground mb-6">
           {selectedTier?.name} Wash on {dateObj?.date} at {selectedTime}
         </p>
-        <div className="w-full max-w-sm rounded-xl border bg-card p-4 shadow-card-sm text-left space-y-2 mb-8">
+        <div className="w-full max-w-sm rounded-xl glass-card p-4 text-left space-y-2 mb-8">
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Wash</span>
             <span className="font-medium">{selectedTier?.name}</span>
@@ -187,7 +187,12 @@ export default function CustomerPage() {
     return (
       <div className="min-h-screen bg-background">
         {/* Hero */}
-        <section className="px-6 pt-16 pb-12 text-center">
+        <section className="px-6 pt-16 pb-12 text-center relative overflow-hidden" style={{ background: 'var(--gradient-hero)' }}>
+          {/* Multi-glow blobs for depth */}
+          <div className="absolute top-[-40px] left-1/2 -translate-x-1/2 w-[450px] h-[350px] rounded-full bg-accent/[0.05] blur-[100px] pointer-events-none" aria-hidden="true" />
+          <div className="absolute top-[60px] left-[15%] w-[200px] h-[200px] rounded-full bg-gold-400/[0.04] blur-[80px] pointer-events-none animate-float" aria-hidden="true" />
+          <div className="absolute top-[40px] right-[10%] w-[150px] h-[150px] rounded-full bg-cream-300/[0.15] blur-[60px] pointer-events-none" aria-hidden="true" />
+          <div className="absolute inset-0 bg-grain pointer-events-none" aria-hidden="true" />
           <div className="flex items-center justify-center gap-2 mb-4">
             <Sparkles className="w-6 h-6 text-accent" />
             <span className="text-sm font-medium text-accent tracking-wide uppercase">
@@ -202,32 +207,45 @@ export default function CustomerPage() {
           </p>
           <button
             onClick={() => handleStartBooking()}
-            className="h-12 px-8 rounded-lg bg-accent text-accent-foreground font-semibold inline-flex items-center gap-2 hover:bg-accent/90 active:scale-[0.98] transition-all shadow-card-md"
+            className="h-12 px-8 rounded-xl glossy-btn text-accent-foreground font-semibold inline-flex items-center gap-2 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 animate-glow-pulse"
           >
             Book a Wash
             <ArrowRight className="w-5 h-5" />
           </button>
+          <p className="mt-4 text-sm text-muted-foreground/70 tracking-wide">
+            No account needed <span className="mx-2 text-border">|</span> Book in 2 minutes
+          </p>
         </section>
 
         {/* Tier cards */}
-        <section className="px-6 pb-12">
-          <h2 className="text-xl font-display font-semibold text-foreground mb-4 text-center">
+        <section className="px-6 pb-12 relative">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/10 to-transparent" />
+          <h2 className="text-xl font-display font-semibold text-foreground mb-2 text-center pt-8">
             Our Wash Packages
           </h2>
-          <div className="max-w-md mx-auto space-y-3">
-            {tiers.map((tier) => (
-              <WashTierCard
-                key={tier.id}
-                tier={tier}
-                onSelect={() => handleStartBooking(tier)}
-              />
+          <div className="w-10 h-0.5 bg-gradient-to-r from-accent/10 via-accent/40 to-accent/10 mx-auto mb-6 rounded-full" />
+          <div className="max-w-md mx-auto space-y-3 md:max-w-2xl md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
+            {tiers.map((tier, i) => (
+              <div key={tier.id} className={["animate-fade-up", "animate-fade-up-1", "animate-fade-up-2"][i] || "animate-fade-up-2"}>
+                <WashTierCard
+                  tier={tier}
+                  onSelect={() => handleStartBooking(tier)}
+                />
+              </div>
             ))}
           </div>
         </section>
 
         {/* Footer */}
-        <footer className="px-6 py-8 border-t text-center text-sm text-muted-foreground">
-          <p>Cream Car Wash, Fourways, Gauteng</p>
+        <footer className="px-6 py-10 text-center text-sm text-muted-foreground">
+          <div className="h-px bg-gradient-to-r from-transparent via-accent/15 to-transparent mb-8" />
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <Sparkles className="w-4 h-4 text-accent/50" />
+            <span className="font-display font-medium text-foreground/80 tracking-wide text-xs uppercase">
+              Cream Car Wash
+            </span>
+          </div>
+          <p>Fourways, Gauteng</p>
           <p className="mt-1">Open 7 days, 07:00 - 17:30</p>
         </footer>
       </div>
@@ -238,7 +256,7 @@ export default function CustomerPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Booking header */}
-      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur border-b px-4 py-3">
+      <header className="sticky top-0 z-40 glass-surface border-b border-white/30 px-4 py-3">
         <div className="flex items-center gap-3 max-w-md mx-auto">
           <button
             onClick={handleBack}
@@ -265,7 +283,7 @@ export default function CustomerPage() {
             <div
               key={s}
               className={cn(
-                "h-1 flex-1 rounded-full transition-colors",
+                "h-1.5 flex-1 rounded-full transition-all duration-300 ease-out",
                 ["tier", "date", "time", "details"].indexOf(step) >= i
                   ? "bg-accent"
                   : "bg-muted"
@@ -301,7 +319,7 @@ export default function CustomerPage() {
             <h2 className="text-xl font-display font-semibold text-foreground mb-4">
               Pick a date
             </h2>
-            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-7">
               {dates.map((d) => (
                 <button
                   key={d.value}
@@ -378,7 +396,7 @@ export default function CustomerPage() {
                     onChange={(e) => { setName(e.target.value); setErrors((p) => ({ ...p, name: "" })); }}
                     placeholder="Your name"
                     className={cn(
-                      "w-full h-12 pl-10 pr-4 rounded-lg border bg-card text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent",
+                      "w-full h-12 pl-10 pr-4 rounded-lg border border-white/40 bg-[var(--glass-bg)] backdrop-blur-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.5)]",
                       errors.name && "border-destructive"
                     )}
                   />
@@ -398,7 +416,7 @@ export default function CustomerPage() {
                     onChange={(e) => { setPhone(e.target.value); setErrors((p) => ({ ...p, phone: "" })); }}
                     placeholder="082 123 4567"
                     className={cn(
-                      "w-full h-12 pl-10 pr-4 rounded-lg border bg-card text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent",
+                      "w-full h-12 pl-10 pr-4 rounded-lg border border-white/40 bg-[var(--glass-bg)] backdrop-blur-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.5)]",
                       errors.phone && "border-destructive"
                     )}
                   />
@@ -407,7 +425,7 @@ export default function CustomerPage() {
               </div>
 
               {/* Summary */}
-              <div className="rounded-xl border bg-muted/30 p-4 space-y-2 text-sm">
+              <div className="rounded-xl glass-card border-accent/15 bg-gradient-to-br from-cream-50/60 to-[var(--glass-bg)] p-4 space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Wash</span>
                   <span className="font-medium">{selectedTier?.name}</span>
@@ -431,7 +449,7 @@ export default function CustomerPage() {
               <button
                 onClick={handleSubmitBooking}
                 disabled={loading}
-                className="w-full h-12 rounded-lg bg-accent text-accent-foreground font-semibold flex items-center justify-center gap-2 hover:bg-accent/90 active:scale-[0.98] transition-all disabled:opacity-50"
+                className="w-full h-12 rounded-lg glossy-btn text-accent-foreground font-semibold flex items-center justify-center gap-2 active:scale-[0.98] transition-all disabled:opacity-50"
               >
                 {loading ? (
                   <>

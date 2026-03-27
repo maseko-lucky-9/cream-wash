@@ -9,3 +9,5 @@
     }
   ]
 }
+git remote add origin https://github.com/maseko-lucky-9/cream-wash.git
+git push -u origin main

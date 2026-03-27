@@ -39,13 +39,13 @@ export function PinPad({ onSubmit, title = "Enter PIN", error }: PinPadProps) {
   const digits = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", "del"];
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-6 bg-background">
+    <div className="flex flex-col items-center justify-center min-h-screen px-6 relative" style={{ background: 'linear-gradient(180deg, #FFFBF5 0%, #FFEFD5 50%, #FFF5E6 100%)' }}>
       <h1 className="text-2xl font-display font-semibold text-foreground mb-8">
         {title}
       </h1>
 
       {/* PIN dots */}
-      <div className="flex gap-4 mb-8">
+      <div className="flex gap-4 mb-8 animate-fade-up">
         {[0, 1, 2, 3].map((i) => (
           <div
             key={i}
@@ -60,7 +60,7 @@ export function PinPad({ onSubmit, title = "Enter PIN", error }: PinPadProps) {
       </div>
 
       {/* PIN display (monospace) */}
-      <div className="font-mono text-3xl tracking-[0.5em] text-foreground mb-2 h-10 flex items-center">
+      <div className="font-mono text-3xl tracking-[0.5em] text-foreground mb-2 h-10 flex items-center glass-surface rounded-lg px-6 py-2">
         {pin.split("").map((_, i) => (
           <span key={i}>*</span>
         ))}
@@ -103,7 +103,7 @@ export function PinPad({ onSubmit, title = "Enter PIN", error }: PinPadProps) {
               key={i}
               onClick={() => handleDigit(d)}
               disabled={loading || pin.length >= 4}
-              className="h-[56px] rounded-lg bg-card shadow-card-sm border border-border text-xl font-mono font-medium text-foreground hover:bg-muted active:bg-muted/80 transition-colors disabled:opacity-50"
+              className="h-[56px] rounded-xl bg-gradient-to-b from-white to-cream-50 shadow-pin-key border border-white/60 text-xl font-mono font-medium text-foreground hover:from-cream-50 hover:to-cream-100 active:shadow-pin-key-active active:from-cream-100 active:to-cream-200 transition-all duration-150 disabled:opacity-50"
             >
               {d}
             </button>

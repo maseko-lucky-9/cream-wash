@@ -25,7 +25,6 @@ export function BayCard({ bay, currentJob, onComplete, compact = false }: BayCar
   }, [bay.status, currentJob?.started_at]);
 
   const isActive = bay.status === "in_progress";
-  const borderColor = isActive ? "border-l-status-active" : "border-l-status-idle";
 
   if (compact) {
     return (
@@ -51,10 +50,19 @@ export function BayCard({ bay, currentJob, onComplete, compact = false }: BayCar
   return (
     <div
       className={cn(
-        "rounded-xl border bg-card shadow-card-sm border-l-4 p-4 transition-all",
-        borderColor
+        "relative overflow-hidden rounded-xl glass-card p-4 transition-all"
       )}
     >
+      <div className={cn(
+        "absolute left-0 top-0 bottom-0 w-1 rounded-l-xl",
+        isActive
+          ? "bg-gradient-to-b from-status-active to-status-active/50"
+          : "bg-gradient-to-b from-status-idle to-status-idle/50"
+      )} />
+      <div className={cn(
+        "absolute left-0 top-1/4 bottom-1/4 w-8 rounded-r-full blur-xl pointer-events-none",
+        isActive ? "bg-status-active/8" : "bg-status-idle/8"
+      )} />
       <div className="flex items-center justify-between mb-2">
         <h3 className="font-sans font-semibold text-base text-foreground">
           {bay.name}

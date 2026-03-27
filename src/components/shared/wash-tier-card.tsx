@@ -22,11 +22,11 @@ export function WashTierCard({
       onClick={() => onSelect?.(tier)}
       disabled={!onSelect}
       className={cn(
-        "w-full text-left rounded-xl border-2 bg-card p-4 transition-all shadow-card-sm",
-        "hover:shadow-card-md active:scale-[0.98]",
+        "w-full text-left rounded-xl border p-4 transition-all duration-200 glass-card relative overflow-hidden",
+        "hover:shadow-card-glass-hover hover:-translate-y-0.5 active:shadow-card-active active:scale-[0.98]",
         selected
-          ? "border-accent shadow-card-md"
-          : "border-border",
+          ? "border-accent/30 shadow-glow-accent bg-[image:var(--gradient-card-selected)]"
+          : "border-white/40",
         !onSelect && "cursor-default",
         compact && "p-3"
       )}
@@ -41,7 +41,7 @@ export function WashTierCard({
         <span className={cn(
           "font-sans font-semibold tabular-nums",
           compact ? "text-lg" : "text-xl",
-          selected ? "text-accent" : "text-foreground"
+          "text-accent"
         )}>
           {formatZAR(tier.price_zar)}
         </span>

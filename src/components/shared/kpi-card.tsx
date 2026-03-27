@@ -48,12 +48,14 @@ export function KpiCard({
   }, [value]);
 
   return (
-    <div className="rounded-xl border bg-card shadow-card-sm p-4">
-      <div className="flex items-center gap-2 mb-2">
-        <Icon className={cn("w-5 h-5", color)} />
+    <div className="rounded-xl glass-card p-4 bg-gradient-to-br from-[var(--glass-bg)] to-cream-50/40">
+      <div className="flex items-center gap-2.5 mb-2">
+        <div className="w-8 h-8 rounded-lg glass-surface flex items-center justify-center">
+          <Icon className={cn("w-4.5 h-4.5", color)} />
+        </div>
         <span className="text-kpi-label text-muted-foreground">{label}</span>
       </div>
-      <p className={cn("text-kpi tabular-nums font-sans", color)}>
+      <p className={cn("text-kpi tabular-nums font-sans tracking-tight", color)}>
         {format(displayValue)}
       </p>
     </div>

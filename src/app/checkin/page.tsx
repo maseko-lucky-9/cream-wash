@@ -74,11 +74,12 @@ export default function CheckInPage() {
   // Confirmation
   if (step === "confirm") {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6 text-center">
-        <div className="w-16 h-16 rounded-full bg-status-idle/10 flex items-center justify-center mb-6">
-          <Check className="w-8 h-8 text-status-idle" />
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6 text-center relative">
+        <div className="fixed top-1/4 left-1/3 w-[250px] h-[250px] rounded-full bg-accent/[0.04] blur-[100px] pointer-events-none" aria-hidden="true" />
+        <div className="w-16 h-16 rounded-full bg-status-idle/10 glass-surface flex items-center justify-center mb-6 animate-scale-check">
+          <Check className="w-10 h-10 text-status-idle" strokeWidth={2.5} />
         </div>
-        <h1 className="text-2xl font-display font-bold text-foreground mb-2">
+        <h1 className="text-2xl font-display font-bold text-foreground mb-2 animate-fade-up">
           You are checked in
         </h1>
         <p className="text-muted-foreground mb-6">
@@ -86,13 +87,13 @@ export default function CheckInPage() {
         </p>
 
         <div className="w-full max-w-sm space-y-4 mb-8">
-          <div className="rounded-xl border bg-card p-6 shadow-card-sm text-center">
+          <div className="rounded-xl glass-card p-6 text-center">
             <p className="text-kpi-label text-muted-foreground mb-1">
               Your position
             </p>
             <p className="text-kpi tabular-nums text-accent">#{queuePosition}</p>
           </div>
-          <div className="rounded-xl border bg-card p-6 shadow-card-sm text-center">
+          <div className="rounded-xl glass-card p-6 text-center">
             <p className="text-kpi-label text-muted-foreground mb-1">
               Estimated wait
             </p>
@@ -110,9 +111,10 @@ export default function CheckInPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      <div className="fixed top-0 right-1/4 w-[300px] h-[300px] rounded-full bg-accent/[0.03] blur-[100px] pointer-events-none" aria-hidden="true" />
       {/* Header */}
-      <header className="px-6 pt-10 pb-6 text-center">
+      <header className="px-6 pt-10 pb-6 text-center relative">
         <div className="flex items-center justify-center gap-2 mb-2">
           <Sparkles className="w-5 h-5 text-accent" />
           <span className="text-sm font-medium text-accent tracking-wide uppercase">
@@ -164,7 +166,7 @@ export default function CheckInPage() {
                   onChange={(e) => { setName(e.target.value); setErrors((p) => ({ ...p, name: "" })); }}
                   placeholder="Your name"
                   className={cn(
-                    "w-full h-12 pl-10 pr-4 rounded-lg border bg-card text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent",
+                    "w-full h-12 pl-10 pr-4 rounded-lg border border-white/40 bg-[var(--glass-bg)] backdrop-blur-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.5)]",
                     errors.name && "border-destructive"
                   )}
                 />
@@ -184,7 +186,7 @@ export default function CheckInPage() {
                   onChange={(e) => { setPhone(e.target.value); setErrors((p) => ({ ...p, phone: "" })); }}
                   placeholder="082 123 4567"
                   className={cn(
-                    "w-full h-12 pl-10 pr-4 rounded-lg border bg-card text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent",
+                    "w-full h-12 pl-10 pr-4 rounded-lg border border-white/40 bg-[var(--glass-bg)] backdrop-blur-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.5)]",
                     errors.phone && "border-destructive"
                   )}
                 />
@@ -195,7 +197,7 @@ export default function CheckInPage() {
             <button
               onClick={handleCheckIn}
               disabled={loading}
-              className="w-full h-12 rounded-lg bg-accent text-accent-foreground font-semibold flex items-center justify-center gap-2 hover:bg-accent/90 active:scale-[0.98] transition-all disabled:opacity-50 mt-4"
+              className="w-full h-12 rounded-lg glossy-btn text-accent-foreground font-semibold flex items-center justify-center gap-2 active:scale-[0.98] transition-all disabled:opacity-50 mt-4"
             >
               {loading ? (
                 <>
