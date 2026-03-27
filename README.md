@@ -1,36 +1,122 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cream Wash - Premium Car Wash PWA
 
-## Getting Started
+A mobile-first Progressive Web App for Cream Car Wash (Fourways, Gauteng, South Africa). Built as a sales demo to prove digital car tracking, queue management, and real-time revenue visibility.
 
-First, run the development server:
+## Tech Stack
+
+- **Framework:** Next.js 14 (App Router) + TypeScript
+- **Styling:** Tailwind CSS + custom design system (warm cream theme)
+- **Database:** Supabase (PostgreSQL + Realtime)
+- **Charts:** Recharts
+- **Icons:** Lucide React
+- **Auth:** Custom 4-digit PIN (bcrypt hashed)
+- **Package Manager:** pnpm
+- **Deployment:** Vercel
+
+## Features
+
+### P0 (Must Have)
+- Staff Dashboard (`/staff`) - PIN login, bay board with real-time status, queue management, assign car to bay, mark job complete
+- Customer Landing + Booking (`/`) - Hero page, wash tier cards, multi-step booking flow
+- Walk-in QR Check-in (`/checkin`) - Tier selection, name/phone form, queue confirmation
+- Owner Dashboard (`/owner`) - PIN login, 4 KPI cards, bay status, real-time updates
+- Seed Data API (`GET /api/seed`) - Demo data (~25 cars today + 7 days history)
+- Supabase Realtime - Live bay/job updates across all views
+
+### P1 (Should Have)
+- 7-day revenue bar chart (Recharts)
+- Wash history log (scrollable list of today's completed washes)
+
+## Setup
+
+### 1. Clone and install
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repo-url>
+cd cream-wash
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Supabase setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Create a new Supabase project at [supabase.com](https://supabase.com)
+2. Open the SQL Editor and run the migration file:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+supabase/migration.sql
+```
 
-## Learn More
+This creates all tables, views, indexes, RLS policies, and enables realtime.
 
-To learn more about Next.js, take a look at the following resources:
+3. Copy `.env.example` to `.env.local` and fill in your Supabase credentials:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+cp .env.example .env.local
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Edit `.env.local`:
+```
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+```
 
-## Deploy on Vercel
+### 3. Seed demo data
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+pnpm dev
+# Then visit http://localhost:3000/api/seed
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 4. Run locally
+
+```bash
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000)
+
+## Demo PINs
+
+| Role  | Name   | PIN  |
+|-------|--------|------|
+| Staff | Sipho  | 1234 |
+| Staff | Thandi | 5678 |
+| Owner | Owner  | 0000 |
+
+## Routes
+
+| Route      | Purpose                          |
+|------------|----------------------------------|
+| `/`        | Customer landing + booking flow  |
+| `/checkin` | Walk-in QR check-in              |
+| `/staff`   | Staff dashboard (PIN protected)  |
+| `/owner`   | Owner dashboard (PIN protected)  |
+| `/api/seed`| Seed demo data                   |
+
+## Currency and Locale
+
+- All prices in ZAR (South African Rand), formatted as "R1,234"
+- Prices stored in cents (e.g., R80 = 8000)
+- All times in Africa/Johannesburg (SAST, UTC+2)
+
+## Deploy to Vercel
+
+1. Push to GitHub
+2. Import into Vercel
+3. Add environment variables in Vercel dashboard
+4. Deploy
+
+## E2E Tests
+
+```bash
+pnpm exec playwright install
+pnpm exec playwright test
+```
+
+## Design System
+
+- Background: `#FFFBF5` (warm cream)
+- Accent: `#B45309` (amber)
+- Fonts: DM Sans (display), Inter (body), JetBrains Mono (PIN)
+- Touch targets: 56px staff primary, 48px general
+- Mobile-first: 375px+ viewport
