@@ -91,7 +91,7 @@ export default function OwnerPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background pb-8 relative">
+    <div className="min-h-screen bg-background pb-20 relative">
       {/* Ambient background glow */}
       <div className="fixed top-10 right-1/4 w-[350px] h-[350px] rounded-full bg-accent/[0.03] blur-[120px] pointer-events-none" aria-hidden="true" />
       <div className="fixed bottom-1/3 left-1/3 w-[250px] h-[250px] rounded-full bg-gold-400/[0.03] blur-[80px] pointer-events-none" aria-hidden="true" />

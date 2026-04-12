@@ -152,7 +152,7 @@ export default function StaffPage() {
       : 30;
 
   return (
-    <div className="min-h-screen bg-background pb-8 relative">
+    <div className="min-h-screen bg-background pb-20 relative">
       {/* Ambient background glow */}
       <div className="fixed top-0 left-1/4 w-[300px] h-[300px] rounded-full bg-accent/[0.03] blur-[100px] pointer-events-none" aria-hidden="true" />
       <div className="fixed bottom-1/4 right-1/4 w-[250px] h-[250px] rounded-full bg-cream-300/[0.08] blur-[80px] pointer-events-none" aria-hidden="true" />

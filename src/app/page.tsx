@@ -185,7 +185,7 @@ export default function CustomerPage() {
   // Landing page
   if (step === "landing") {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background pb-20">
         {/* Hero */}
         <section className="px-6 pt-16 pb-12 text-center relative overflow-hidden" style={{ background: 'var(--gradient-hero)' }}>
           {/* Animated glow blobs */}
@@ -256,7 +256,7 @@ export default function CustomerPage() {
 
   // Booking flow steps
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pb-20">
       {/* Booking header */}
       <header className="sticky top-0 z-40 glass-surface border-b border-white/30 px-4 py-3">
         <div className="flex items-center gap-3 max-w-md mx-auto">
