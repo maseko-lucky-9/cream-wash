@@ -188,10 +188,12 @@ export default function CustomerPage() {
       <div className="min-h-screen bg-background">
         {/* Hero */}
         <section className="px-6 pt-16 pb-12 text-center relative overflow-hidden" style={{ background: 'var(--gradient-hero)' }}>
-          {/* Multi-glow blobs for depth */}
-          <div className="absolute top-[-40px] left-1/2 -translate-x-1/2 w-[450px] h-[350px] rounded-full bg-accent/[0.05] blur-[100px] pointer-events-none" aria-hidden="true" />
-          <div className="absolute top-[60px] left-[15%] w-[200px] h-[200px] rounded-full bg-gold-400/[0.04] blur-[80px] pointer-events-none animate-float" aria-hidden="true" />
-          <div className="absolute top-[40px] right-[10%] w-[150px] h-[150px] rounded-full bg-cream-300/[0.15] blur-[60px] pointer-events-none" aria-hidden="true" />
+          {/* Animated glow blobs */}
+          <div className="absolute top-[-40px] left-1/2 w-[450px] h-[350px] rounded-full bg-accent/[0.05] blur-[100px] pointer-events-none animate-drift-1" aria-hidden="true" />
+          <div className="absolute top-[60px] left-[15%] w-[200px] h-[200px] rounded-full bg-gold-400/[0.06] blur-[80px] pointer-events-none animate-drift-2" aria-hidden="true" />
+          <div className="absolute top-[40px] right-[10%] w-[150px] h-[150px] rounded-full bg-cream-300/[0.15] blur-[60px] pointer-events-none animate-drift-3" aria-hidden="true" />
+          <div className="absolute bottom-[-20px] left-1/3 w-[250px] h-[200px] rounded-full bg-gold-500/[0.03] blur-[90px] pointer-events-none animate-drift-2 [animation-delay:-6s]" aria-hidden="true" />
+          <div className="absolute inset-0 bg-gradient-to-b from-cream-200/20 via-transparent to-cream-100/10 pointer-events-none animate-gradient-breathe" aria-hidden="true" />
           <div className="absolute inset-0 bg-grain pointer-events-none" aria-hidden="true" />
           <div className="flex items-center justify-center gap-2 mb-4">
             <Sparkles className="w-6 h-6 text-accent" />
