@@ -21,8 +21,27 @@ interface DayRevenue {
   isToday: boolean;
 }
 
+const BAR_HEIGHTS = [55, 40, 70, 35, 60, 45, 65, 50];
+
+function RevenueChartSkeleton() {
+  return (
+    <div className="rounded-xl bg-card border border-border shadow-card-sm p-4">
+      <div className="flex items-end gap-1.5 h-[200px] px-1">
+        {BAR_HEIGHTS.map((h, i) => (
+          <div
+            key={i}
+            className="flex-1 rounded-t skeleton"
+            style={{ height: `${h}%` }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function RevenueChart() {
   const [data, setData] = useState<DayRevenue[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchRevenue() {
@@ -78,13 +97,13 @@ export function RevenueChart() {
       setData(chartData);
     }
 
-    fetchRevenue();
+    fetchRevenue().finally(() => setLoading(false));
   }, []);
 
-  if (data.length === 0) return null;
+  if (loading) return <RevenueChartSkeleton />;
 
   return (
-    <div className="rounded-xl glass-card p-4">
+    <div className="rounded-xl bg-card border border-border shadow-card-sm p-4">
       <ResponsiveContainer width="100%" height={200}>
         <BarChart data={data} margin={{ top: 4, right: 4, bottom: 0, left: -20 }}>
           <defs>

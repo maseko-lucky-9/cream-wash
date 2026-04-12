@@ -29,7 +29,7 @@ test.describe("Owner Dashboard", () => {
 
     // Verify KPI cards
     await expect(page.getByText("Cars Today")).toBeVisible({ timeout: 5000 });
-    await expect(page.getByText("Revenue")).toBeVisible();
+    await expect(page.getByText("Revenue", { exact: true }).first()).toBeVisible();
     await expect(page.getByText("Avg Wait")).toBeVisible();
     await expect(page.getByText("Bay Utilization")).toBeVisible();
 

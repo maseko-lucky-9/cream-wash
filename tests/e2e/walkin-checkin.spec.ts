@@ -8,9 +8,9 @@ test.describe("Walk-In Check-In Flow", () => {
   test("should display check-in page with tier selection", async ({ page }) => {
     await page.goto("/checkin");
     await expect(page.getByText("Walk-In Check-In")).toBeVisible();
-    await expect(page.getByText("Basic")).toBeVisible();
-    await expect(page.getByText("Full")).toBeVisible();
-    await expect(page.getByText("Premium")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Basic" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Full" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Premium" })).toBeVisible();
   });
 
   test("should complete walk-in check-in flow", async ({ page }) => {

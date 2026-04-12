@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        display: ["DM Sans", "sans-serif"],
+        display: ["Bricolage Grotesque", "system-ui", "sans-serif"],
         sans: ["Inter", "sans-serif"],
         mono: ["JetBrains Mono", "monospace"],
       },
@@ -63,6 +63,9 @@ const config: Config = {
           active: "#2563EB",
           waiting: "#D97706",
         },
+      },
+      letterSpacing: {
+        tightest: "-0.04em", // net-new; do not add tight/tighter/etc (would override Tailwind defaults)
       },
       fontSize: {
         kpi: ["3rem", { lineHeight: "1.1", fontWeight: "600" }],
@@ -138,6 +141,10 @@ const config: Config = {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0.85" },
         },
+        "skeleton-shine": {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
+        },
       },
       animation: {
         "fade-up": "fade-up 0.4s ease-out both",
@@ -153,6 +160,7 @@ const config: Config = {
         "drift-2": "drift-2 16s ease-in-out infinite",
         "drift-3": "drift-3 14s ease-in-out infinite",
         "gradient-breathe": "gradient-breathe 8s ease-in-out infinite",
+        "skeleton-shine": "skeleton-shine 1.5s ease-in-out infinite",
       },
     },
   },

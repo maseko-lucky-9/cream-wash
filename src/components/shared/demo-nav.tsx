@@ -55,7 +55,7 @@ export function DemoNav() {
               "flex items-center gap-1.5 h-8 px-3 rounded-full text-[11px] font-medium transition-all duration-150",
               active
                 ? "bg-accent text-accent-foreground"
-                : "text-muted-foreground hover:text-foreground hover:bg-black/[0.04] active:bg-black/[0.07]"
+                : "text-muted-foreground hover:text-foreground hover:bg-foreground/[0.04] active:bg-foreground/[0.07]"
             )}
           >
             <Icon className="w-3 h-3 shrink-0" strokeWidth={active ? 2.5 : 2} />
@@ -71,7 +71,7 @@ export function DemoNav() {
         disabled={seeding}
         title="Reset demo data"
         aria-label="Reset demo data"
-        className="flex items-center gap-1.5 h-8 px-3 rounded-full text-[11px] font-medium text-muted-foreground hover:text-foreground hover:bg-black/[0.04] active:bg-black/[0.07] transition-all duration-150 disabled:opacity-40"
+        className="flex items-center gap-1.5 h-8 px-3 rounded-full text-[11px] font-medium text-muted-foreground hover:text-foreground hover:bg-foreground/[0.04] active:bg-foreground/[0.07] transition-all duration-150 disabled:opacity-40"
       >
         <RefreshCw className={cn("w-3 h-3 shrink-0", seeding && "animate-spin")} strokeWidth={2} />
         <span>Seed</span>

@@ -39,7 +39,7 @@ export function PinPad({ onSubmit, title = "Enter PIN", error }: PinPadProps) {
   const digits = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", "del"];
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-6 relative" style={{ background: 'linear-gradient(180deg, #FFFBF5 0%, #FFEFD5 50%, #FFF5E6 100%)' }}>
+    <div className="flex flex-col items-center justify-center min-h-screen px-6 relative bg-pin-surface">
       <h1 className="text-2xl font-display font-semibold text-foreground mb-8">
         {title}
       </h1>
@@ -76,7 +76,7 @@ export function PinPad({ onSubmit, title = "Enter PIN", error }: PinPadProps) {
       {/* Loading indicator */}
       {loading && (
         <div className="flex items-center gap-2 text-muted-foreground mb-4">
-          <Loader2 className="w-4 h-4 animate-spin" />
+          <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
           <span className="text-sm">Verifying...</span>
         </div>
       )}
@@ -91,10 +91,10 @@ export function PinPad({ onSubmit, title = "Enter PIN", error }: PinPadProps) {
                 key={i}
                 onClick={handleDelete}
                 disabled={loading || pin.length === 0}
-                className="h-[56px] rounded-lg flex items-center justify-center text-muted-foreground hover:bg-muted active:bg-muted/80 transition-colors disabled:opacity-30"
                 aria-label="Delete"
+                className="h-[56px] rounded-lg flex items-center justify-center text-muted-foreground hover:bg-muted active:bg-muted/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-1 transition-colors disabled:opacity-30"
               >
-                <Delete className="w-6 h-6" />
+                <Delete className="w-6 h-6" aria-hidden="true" />
               </button>
             );
           }
@@ -103,7 +103,7 @@ export function PinPad({ onSubmit, title = "Enter PIN", error }: PinPadProps) {
               key={i}
               onClick={() => handleDigit(d)}
               disabled={loading || pin.length >= 4}
-              className="h-[56px] rounded-xl bg-gradient-to-b from-white to-cream-50 shadow-pin-key border border-white/60 text-xl font-mono font-medium text-foreground hover:from-cream-50 hover:to-cream-100 active:shadow-pin-key-active active:from-cream-100 active:to-cream-200 transition-all duration-150 disabled:opacity-50"
+              className="h-[56px] rounded-xl bg-gradient-to-b from-white to-cream-50 shadow-pin-key border border-white/60 text-xl font-mono font-medium text-foreground hover:from-cream-50 hover:to-cream-100 active:shadow-pin-key-active active:from-cream-100 active:to-cream-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-1 transition-all duration-150 disabled:opacity-50"
             >
               {d}
             </button>

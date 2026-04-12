@@ -28,6 +28,7 @@ export default function CustomerPage() {
   const [slots, setSlots] = useState<TimeSlot[]>([]);
   const [loading, setLoading] = useState(false);
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
+  const [bookingId, setBookingId] = useState<string>("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -107,6 +108,7 @@ export default function CustomerPage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
+      setBookingId(data.booking?.id ?? "");
       setBookingConfirmed(true);
       setStep("confirm");
     } catch (err) {
@@ -130,6 +132,7 @@ export default function CustomerPage() {
     setName("");
     setPhone("");
     setBookingConfirmed(false);
+    setBookingId("");
     setErrors({});
   };
 
@@ -144,10 +147,15 @@ export default function CustomerPage() {
         <h1 className="text-2xl font-display font-bold text-foreground mb-2 animate-fade-up">
           Booking Confirmed
         </h1>
-        <p className="text-muted-foreground mb-6">
+        <p className="text-muted-foreground">
           {selectedTier?.name} Wash on {dateObj?.date} at {selectedTime}
         </p>
-        <div className="w-full max-w-sm rounded-xl glass-card p-4 text-left space-y-2 mb-8">
+        {bookingId && (
+          <p className="text-xs font-mono text-muted-foreground/60 tracking-widest mt-1 mb-6">
+            Ref #{bookingId.slice(0, 8).toUpperCase()}
+          </p>
+        )}
+        <div className="w-full max-w-sm rounded-xl glass-card p-4 text-left space-y-2 mt-6 mb-8">
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Wash</span>
             <span className="font-medium">{selectedTier?.name}</span>
@@ -172,12 +180,20 @@ export default function CustomerPage() {
         <p className="text-sm text-muted-foreground mb-6">
           See you at Cream Car Wash, Fourways!
         </p>
-        <button
-          onClick={resetBooking}
-          className="h-12 px-6 rounded-lg bg-primary text-primary-foreground font-medium"
-        >
-          Done
-        </button>
+        <div className="flex flex-col gap-3 w-full max-w-sm">
+          <a
+            href="/checkin"
+            className="h-12 px-6 rounded-lg glossy-btn text-accent-foreground font-semibold flex items-center justify-center gap-2"
+          >
+            Check In on Arrival
+          </a>
+          <button
+            onClick={resetBooking}
+            className="h-12 px-6 rounded-lg border border-border text-foreground font-medium hover:bg-muted/50 transition-colors"
+          >
+            Done
+          </button>
+        </div>
       </div>
     );
   }
@@ -231,6 +247,7 @@ export default function CustomerPage() {
               <div key={tier.id} className={["animate-fade-up", "animate-fade-up-1", "animate-fade-up-2"][i] || "animate-fade-up-2"}>
                 <WashTierCard
                   tier={tier}
+                  mostPopular={tier.sort_order === 2}
                   onSelect={() => handleStartBooking(tier)}
                 />
               </div>
@@ -270,9 +287,7 @@ export default function CustomerPage() {
           <div>
             <p className="text-sm text-muted-foreground">Book a Wash</p>
             <p className="font-display font-semibold text-foreground text-sm">
-              Step{" "}
-              {step === "tier" ? "1" : step === "date" ? "2" : step === "time" ? "3" : "4"}{" "}
-              of 4
+              {step === "tier" ? "1: Choose Wash" : step === "date" ? "2: Pick a Date" : step === "time" ? "3: Select a Time" : "4: Your Details"}
             </p>
           </div>
         </div>
@@ -308,6 +323,7 @@ export default function CustomerPage() {
                   key={tier.id}
                   tier={tier}
                   selected={selectedTier?.id === tier.id}
+                  mostPopular={tier.sort_order === 2}
                   onSelect={handleTierSelect}
                 />
               ))}
@@ -347,9 +363,16 @@ export default function CustomerPage() {
             <h2 className="text-xl font-display font-semibold text-foreground mb-1">
               Select a time
             </h2>
-            <p className="text-sm text-muted-foreground mb-4">
-              {dates.find((d) => d.value === selectedDate)?.date}
-            </p>
+            <div className="flex items-center justify-between mb-4">
+              <p className="text-sm text-muted-foreground">
+                {dates.find((d) => d.value === selectedDate)?.date}
+              </p>
+              {selectedTier && (
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent bg-accent/8 px-3 py-1.5 rounded-full">
+                  {selectedTier.name} · {formatZAR(selectedTier.price_zar)}
+                </span>
+              )}
+            </div>
             {loading ? (
               <div className="flex items-center justify-center py-12">
                 <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
@@ -386,6 +409,28 @@ export default function CustomerPage() {
               Your details
             </h2>
             <div className="space-y-4">
+              {/* Summary — shown first so price/tier is visible before committing */}
+              <div className="rounded-xl glass-card border-accent/15 bg-gradient-to-br from-cream-50/60 to-[var(--glass-bg)] p-4 space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Wash</span>
+                  <span className="font-medium">{selectedTier?.name}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Price</span>
+                  <span className="font-semibold text-accent">{selectedTier && formatZAR(selectedTier.price_zar)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Date</span>
+                  <span className="font-medium">
+                    {dates.find((d) => d.value === selectedDate)?.date}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Time</span>
+                  <span className="font-medium">{selectedTime}</span>
+                </div>
+              </div>
+
               <div>
                 <label className="block text-sm font-medium text-foreground mb-1.5">
                   Name
@@ -424,28 +469,6 @@ export default function CustomerPage() {
                   />
                 </div>
                 {errors.phone && <p className="text-destructive text-xs mt-1">{errors.phone}</p>}
-              </div>
-
-              {/* Summary */}
-              <div className="rounded-xl glass-card border-accent/15 bg-gradient-to-br from-cream-50/60 to-[var(--glass-bg)] p-4 space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Wash</span>
-                  <span className="font-medium">{selectedTier?.name}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Price</span>
-                  <span className="font-medium">{selectedTier && formatZAR(selectedTier.price_zar)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Date</span>
-                  <span className="font-medium">
-                    {dates.find((d) => d.value === selectedDate)?.date}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Time</span>
-                  <span className="font-medium">{selectedTime}</span>
-                </div>
               </div>
 
               <button

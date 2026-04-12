@@ -19,14 +19,15 @@ export function QueueItem({ job, position, estimatedWait, onAssign }: QueueItemP
       onClick={() => onAssign?.(job)}
       disabled={!onAssign}
       className={cn(
-        "w-full text-left rounded-xl glass-card p-4 transition-all",
-        onAssign && "hover:shadow-card-glass-hover hover:-translate-y-px active:scale-[0.99] cursor-pointer",
+        "w-full text-left rounded-xl bg-card border border-border shadow-card-sm p-4 transition-all",
+        onAssign && "hover:shadow-card-hover hover:-translate-y-px active:scale-[0.99] cursor-pointer",
+        onAssign && "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2",
         !onAssign && "cursor-default"
       )}
     >
       <div className="flex items-start justify-between mb-2">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-full glass-surface bg-accent/10 flex items-center justify-center text-sm font-semibold text-accent shadow-[0_0_8px_rgba(180,100,20,0.1)]">
+          <span className="w-7 h-7 rounded-full bg-accent/10 flex items-center justify-center text-sm font-semibold text-accent">
             {position}
           </span>
           <div>

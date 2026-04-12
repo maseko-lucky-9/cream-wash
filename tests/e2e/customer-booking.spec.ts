@@ -7,14 +7,14 @@ test.describe("Customer Booking Flow", () => {
 
   test("should display landing page with wash tiers", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByText("Cream Car Wash")).toBeVisible();
+    await expect(page.getByText("Cream Car Wash").first()).toBeVisible();
     await expect(page.getByText("Premium Car Wash")).toBeVisible();
     await expect(page.getByText("Book a Wash")).toBeVisible();
 
     // Check tier cards
-    await expect(page.getByText("Basic")).toBeVisible();
-    await expect(page.getByText("Full")).toBeVisible();
-    await expect(page.getByText("Premium")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Basic" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Full" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Premium", exact: true })).toBeVisible();
   });
 
   test("should navigate through booking flow", async ({ page }) => {
@@ -26,10 +26,10 @@ test.describe("Customer Booking Flow", () => {
 
     // Select Full wash
     await page.getByText("Full").first().click();
-    await expect(page.getByText("Pick a date")).toBeVisible({ timeout: 5000 });
+    await expect(page.getByRole("heading", { name: "Pick a date" })).toBeVisible({ timeout: 5000 });
 
     // Select first date (Today)
     await page.getByText("Today").click();
-    await expect(page.getByText("Select a time")).toBeVisible({ timeout: 5000 });
+    await expect(page.getByRole("heading", { name: "Select a time" })).toBeVisible({ timeout: 5000 });
   });
 });

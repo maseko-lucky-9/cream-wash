@@ -10,6 +10,19 @@ interface KpiCardProps {
   format?: (value: number) => string;
   icon: LucideIcon;
   color?: string;
+  loading?: boolean;
+}
+
+function KpiSkeleton() {
+  return (
+    <div className="rounded-xl bg-card border border-border shadow-card-sm p-4">
+      <div className="flex items-center gap-2.5 mb-3">
+        <div className="w-8 h-8 rounded-lg skeleton shrink-0" />
+        <div className="h-3.5 w-24 rounded-md skeleton" />
+      </div>
+      <div className="h-9 w-28 rounded-lg skeleton" />
+    </div>
+  );
 }
 
 export function KpiCard({
@@ -18,10 +31,10 @@ export function KpiCard({
   format = (v) => v.toString(),
   icon: Icon,
   color = "text-foreground",
+  loading = false,
 }: KpiCardProps) {
   const [displayValue, setDisplayValue] = useState(0);
 
-  // Animate count-up
   useEffect(() => {
     if (value === 0) {
       setDisplayValue(0);
@@ -47,11 +60,13 @@ export function KpiCard({
     return () => clearInterval(timer);
   }, [value]);
 
+  if (loading) return <KpiSkeleton />;
+
   return (
-    <div className="rounded-xl glass-card p-4 bg-gradient-to-br from-[var(--glass-bg)] to-cream-50/40">
+    <div className="rounded-xl bg-card border border-border shadow-card-sm p-4">
       <div className="flex items-center gap-2.5 mb-2">
-        <div className="w-8 h-8 rounded-lg glass-surface flex items-center justify-center">
-          <Icon className={cn("w-4.5 h-4.5", color)} />
+        <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center shrink-0">
+          <Icon className={cn("w-[18px] h-[18px]", color)} aria-hidden="true" />
         </div>
         <span className="text-kpi-label text-muted-foreground">{label}</span>
       </div>

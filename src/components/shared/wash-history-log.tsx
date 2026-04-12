@@ -62,8 +62,8 @@ export function WashHistoryLog() {
 
   if (entries.length === 0) {
     return (
-      <div className="rounded-xl glass-card p-6 text-center text-sm text-muted-foreground">
-        <div className="w-12 h-12 rounded-full glass-surface flex items-center justify-center mx-auto mb-3">
+      <div className="rounded-xl bg-card border border-border shadow-card-sm p-6 text-center text-sm text-muted-foreground">
+        <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center mx-auto mb-3">
           <ClipboardList className="w-6 h-6 text-muted-foreground/50" />
         </div>
         No completed washes today.
@@ -72,10 +72,10 @@ export function WashHistoryLog() {
   }
 
   return (
-    <div className="rounded-xl glass-card overflow-hidden">
-      <div className="max-h-[320px] overflow-y-auto divide-y divide-white/20">
+    <div className="rounded-xl bg-card border border-border shadow-card-sm overflow-hidden">
+      <div className="max-h-[320px] overflow-y-auto divide-y divide-border">
         {entries.map((entry) => (
-          <div key={entry.id} className="px-4 py-3 flex items-center justify-between hover:bg-white/20 transition-colors">
+          <div key={entry.id} className="px-4 py-3 flex items-center justify-between hover:bg-muted/40 transition-colors">
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-sm font-medium text-foreground">
