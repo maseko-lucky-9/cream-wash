@@ -66,6 +66,12 @@ const config: Config = {
       },
       letterSpacing: {
         tightest: "-0.04em", // net-new; do not add tight/tighter/etc (would override Tailwind defaults)
+        "display-tight": "-0.03em",
+        "display-normal": "-0.02em",
+      },
+      lineHeight: {
+        "display": "1.1",
+        "heading": "1.2",
       },
       fontSize: {
         kpi: ["3rem", { lineHeight: "1.1", fontWeight: "600" }],
@@ -75,12 +81,12 @@ const config: Config = {
         "card-sm": "0 1px 2px rgba(28, 25, 23, 0.05)",
         "card-md": "0 2px 8px rgba(28, 25, 23, 0.08)",
         "card-lg": "0 4px 16px rgba(28, 25, 23, 0.12)",
-        "card-hover": "0 6px 20px rgba(28, 25, 23, 0.10)",
+        "card-hover": "0 8px 24px rgba(28, 25, 23, 0.11), 0 2px 6px rgba(28, 25, 23, 0.05)",
         "card-active": "0 2px 4px rgba(28, 25, 23, 0.06)",
         "card-glass":
           "0 2px 12px rgba(28, 25, 23, 0.06), 0 1px 2px rgba(28, 25, 23, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.6)",
         "card-glass-hover":
-          "0 8px 30px rgba(28, 25, 23, 0.10), 0 2px 4px rgba(28, 25, 23, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.7)",
+          "0 10px 36px rgba(28, 25, 23, 0.12), 0 2px 6px rgba(28, 25, 23, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.7)",
         "pin-key":
           "0 1px 3px rgba(28, 25, 23, 0.06), 0 1px 2px rgba(28, 25, 23, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.5)",
         "pin-key-active": "inset 0 2px 4px rgba(28, 25, 23, 0.1)",
@@ -96,9 +102,19 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      transitionTimingFunction: {
+        "in-out-smooth": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "spring": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+      },
+      transitionDuration: {
+        "250": "250ms",
+        "350": "350ms",
+        "400": "400ms",
+        "500": "500ms",
+      },
       keyframes: {
         "fade-up": {
-          "0%": { opacity: "0", transform: "translateY(12px)" },
+          "0%": { opacity: "0", transform: "translateY(16px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
         "scale-check": {
@@ -147,12 +163,12 @@ const config: Config = {
         },
       },
       animation: {
-        "fade-up": "fade-up 0.4s ease-out both",
-        "fade-up-1": "fade-up 0.4s ease-out 0.08s both",
-        "fade-up-2": "fade-up 0.4s ease-out 0.16s both",
-        "fade-up-3": "fade-up 0.4s ease-out 0.24s both",
-        "fade-up-4": "fade-up 0.4s ease-out 0.32s both",
-        "scale-check": "scale-check 0.5s ease-out both",
+        "fade-up": "fade-up 0.5s cubic-bezier(0.4, 0, 0.2, 1) both",
+        "fade-up-1": "fade-up 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both",
+        "fade-up-2": "fade-up 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both",
+        "fade-up-3": "fade-up 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both",
+        "fade-up-4": "fade-up 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both",
+        "scale-check": "scale-check 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both",
         "glow-pulse": "glow-pulse 2.5s ease-in-out infinite",
         shimmer: "shimmer 2s ease-in-out infinite",
         float: "float 4s ease-in-out infinite",

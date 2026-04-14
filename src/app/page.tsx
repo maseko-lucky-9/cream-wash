@@ -141,55 +141,59 @@ export default function CustomerPage() {
     const dateObj = dates.find((d) => d.value === selectedDate);
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6 text-center">
-        <div className="w-20 h-20 rounded-full bg-status-idle/10 flex items-center justify-center mb-6 animate-scale-check">
+        <div className="w-20 h-20 rounded-full bg-status-idle/10 flex items-center justify-center mb-8 animate-scale-check">
           <Check className="w-10 h-10 text-status-idle" strokeWidth={2.5} />
         </div>
-        <h1 className="text-2xl font-display font-bold text-foreground mb-2 animate-fade-up">
+        <h1 className="text-2xl font-display font-bold text-foreground tracking-tight mb-2 animate-fade-up">
           Booking Confirmed
         </h1>
-        <p className="text-muted-foreground">
+        <p className="text-muted-foreground leading-relaxed">
           {selectedTier?.name} Wash on {dateObj?.date} at {selectedTime}
         </p>
         {bookingId && (
-          <p className="text-xs font-mono text-muted-foreground/60 tracking-widest mt-1 mb-6">
+          <p className="text-xs font-mono text-muted-foreground/60 tracking-widest mt-1.5 mb-8">
             Ref #{bookingId.slice(0, 8).toUpperCase()}
           </p>
         )}
-        <div className="w-full max-w-sm rounded-xl glass-card p-4 text-left space-y-2 mt-6 mb-8">
+        <div className="w-full max-w-sm rounded-xl glass-card p-5 text-left space-y-3 mt-2 mb-8">
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Wash</span>
             <span className="font-medium">{selectedTier?.name}</span>
           </div>
+          <div className="h-px bg-border/50" />
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Price</span>
             <span className="font-medium">{selectedTier && formatZAR(selectedTier.price_zar)}</span>
           </div>
+          <div className="h-px bg-border/50" />
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Date</span>
             <span className="font-medium">{dateObj?.date}</span>
           </div>
+          <div className="h-px bg-border/50" />
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Time</span>
             <span className="font-medium">{selectedTime}</span>
           </div>
+          <div className="h-px bg-border/50" />
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Name</span>
             <span className="font-medium">{name}</span>
           </div>
         </div>
-        <p className="text-sm text-muted-foreground mb-6">
+        <p className="text-sm text-muted-foreground mb-8">
           See you at Cream Car Wash, Fourways!
         </p>
         <div className="flex flex-col gap-3 w-full max-w-sm">
           <a
             href="/checkin"
-            className="h-12 px-6 rounded-lg glossy-btn text-accent-foreground font-semibold flex items-center justify-center gap-2"
+            className="h-14 px-6 rounded-xl glossy-btn text-accent-foreground font-semibold flex items-center justify-center gap-2 text-base"
           >
             Check In on Arrival
           </a>
           <button
             onClick={resetBooking}
-            className="h-12 px-6 rounded-lg border border-border text-foreground font-medium hover:bg-muted/50 transition-colors"
+            className="h-12 px-6 rounded-xl border border-border text-foreground font-medium hover:bg-muted/50 transition-colors duration-250"
           >
             Done
           </button>
@@ -201,9 +205,9 @@ export default function CustomerPage() {
   // Landing page
   if (step === "landing") {
     return (
-      <div className="min-h-screen bg-background pb-20">
+      <div className="min-h-screen bg-background pb-24">
         {/* Hero */}
-        <section className="px-6 pt-16 pb-12 text-center relative overflow-hidden" style={{ background: 'var(--gradient-hero)' }}>
+        <section className="px-6 pt-20 pb-16 text-center relative overflow-hidden" style={{ background: 'var(--gradient-hero)' }}>
           {/* Animated glow blobs */}
           <div className="absolute top-[-40px] left-1/2 w-[450px] h-[350px] rounded-full bg-accent/[0.05] blur-[100px] pointer-events-none animate-drift-1" aria-hidden="true" />
           <div className="absolute top-[60px] left-[15%] w-[200px] h-[200px] rounded-full bg-gold-400/[0.06] blur-[80px] pointer-events-none animate-drift-2" aria-hidden="true" />
@@ -211,38 +215,41 @@ export default function CustomerPage() {
           <div className="absolute bottom-[-20px] left-1/3 w-[250px] h-[200px] rounded-full bg-gold-500/[0.03] blur-[90px] pointer-events-none animate-drift-2 [animation-delay:-6s]" aria-hidden="true" />
           <div className="absolute inset-0 bg-gradient-to-b from-cream-200/20 via-transparent to-cream-100/10 pointer-events-none animate-gradient-breathe" aria-hidden="true" />
           <div className="absolute inset-0 bg-grain pointer-events-none" aria-hidden="true" />
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Sparkles className="w-6 h-6 text-accent" />
-            <span className="text-sm font-medium text-accent tracking-wide uppercase">
+
+          <div className="flex items-center justify-center gap-2 mb-5 animate-fade-up">
+            <Sparkles className="w-5 h-5 text-accent" />
+            <span className="text-sm font-semibold text-accent tracking-widest uppercase">
               Cream Car Wash
             </span>
           </div>
-          <h1 className="text-4xl font-display font-bold text-foreground leading-tight mb-4">
+          <h1 className="text-5xl font-display font-bold text-foreground leading-[1.08] tracking-tight mb-5 animate-fade-up-1 [text-wrap:balance]">
             Premium Car Wash,<br />Fourways
           </h1>
-          <p className="text-muted-foreground max-w-md mx-auto mb-8">
-            Book your wash online or walk in. Your car deserves the best.
+          <p className="text-base text-muted-foreground max-w-sm mx-auto mb-10 leading-relaxed animate-fade-up-2">
+            Book your wash online or walk in.<br />Your car deserves the best.
           </p>
-          <button
-            onClick={() => handleStartBooking()}
-            className="h-12 px-8 rounded-xl glossy-btn text-accent-foreground font-semibold inline-flex items-center gap-2 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 animate-glow-pulse"
-          >
-            Book a Wash
-            <ArrowRight className="w-5 h-5" />
-          </button>
-          <p className="mt-4 text-sm text-muted-foreground/70 tracking-wide">
+          <div className="animate-fade-up-3">
+            <button
+              onClick={() => handleStartBooking()}
+              className="h-14 px-10 rounded-xl glossy-btn text-accent-foreground font-semibold text-base inline-flex items-center gap-2.5 animate-glow-pulse"
+            >
+              Book a Wash
+              <ArrowRight className="w-5 h-5" />
+            </button>
+          </div>
+          <p className="mt-5 text-sm text-muted-foreground/70 tracking-wide animate-fade-up-4">
             No account needed <span className="mx-2 text-border">|</span> Book in 2 minutes
           </p>
         </section>
 
         {/* Tier cards */}
-        <section className="px-6 pb-12 relative">
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/10 to-transparent" />
-          <h2 className="text-xl font-display font-semibold text-foreground mb-2 text-center pt-8">
+        <section className="px-6 pb-16 relative">
+          <div className="section-divider" />
+          <h2 className="text-2xl font-display font-semibold text-foreground tracking-tight mb-2 text-center pt-12">
             Our Wash Packages
           </h2>
-          <div className="w-10 h-0.5 bg-gradient-to-r from-accent/10 via-accent/40 to-accent/10 mx-auto mb-6 rounded-full" />
-          <div className="max-w-md mx-auto space-y-3 md:max-w-2xl md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
+          <div className="w-12 h-0.5 bg-gradient-to-r from-accent/10 via-accent/50 to-accent/10 mx-auto mb-8 rounded-full" />
+          <div className="max-w-md mx-auto space-y-4 md:max-w-2xl md:grid md:grid-cols-2 md:gap-5 md:space-y-0">
             {tiers.map((tier, i) => (
               <div key={tier.id} className={["animate-fade-up", "animate-fade-up-1", "animate-fade-up-2"][i] || "animate-fade-up-2"}>
                 <WashTierCard
@@ -256,16 +263,16 @@ export default function CustomerPage() {
         </section>
 
         {/* Footer */}
-        <footer className="px-6 py-10 text-center text-sm text-muted-foreground">
-          <div className="h-px bg-gradient-to-r from-transparent via-accent/15 to-transparent mb-8" />
-          <div className="flex items-center justify-center gap-2 mb-2">
+        <footer className="px-6 py-12 text-center text-sm text-muted-foreground">
+          <div className="section-divider mb-10" />
+          <div className="flex items-center justify-center gap-2 mb-3">
             <Sparkles className="w-4 h-4 text-accent/50" />
-            <span className="font-display font-medium text-foreground/80 tracking-wide text-xs uppercase">
+            <span className="font-display font-semibold text-foreground/80 tracking-widest text-xs uppercase">
               Cream Car Wash
             </span>
           </div>
-          <p>Fourways, Gauteng</p>
-          <p className="mt-1">Open 7 days, 07:00 - 17:30</p>
+          <p className="leading-relaxed">Fourways, Gauteng</p>
+          <p className="mt-1 leading-relaxed">Open 7 days, 07:00 – 17:30</p>
         </footer>
       </div>
     );
@@ -273,34 +280,34 @@ export default function CustomerPage() {
 
   // Booking flow steps
   return (
-    <div className="min-h-screen bg-background pb-20">
+    <div className="min-h-screen bg-background pb-24">
       {/* Booking header */}
-      <header className="sticky top-0 z-40 glass-surface border-b border-white/30 px-4 py-3">
+      <header className="sticky top-0 z-40 glass-surface border-b border-white/30 px-4 py-3.5">
         <div className="flex items-center gap-3 max-w-md mx-auto">
           <button
             onClick={handleBack}
-            className="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-muted transition-colors"
+            className="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-muted transition-colors duration-200"
             aria-label="Back"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <div>
-            <p className="text-sm text-muted-foreground">Book a Wash</p>
-            <p className="font-display font-semibold text-foreground text-sm">
-              {step === "tier" ? "1: Choose Wash" : step === "date" ? "2: Pick a Date" : step === "time" ? "3: Select a Time" : "4: Your Details"}
+            <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">Book a Wash</p>
+            <p className="font-display font-semibold text-foreground text-sm tracking-tight">
+              {step === "tier" ? "1 — Choose Wash" : step === "date" ? "2 — Pick a Date" : step === "time" ? "3 — Select a Time" : "4 — Your Details"}
             </p>
           </div>
         </div>
       </header>
 
       {/* Step progress */}
-      <div className="max-w-md mx-auto px-6 pt-4 pb-2">
-        <div className="flex gap-1">
+      <div className="max-w-md mx-auto px-6 pt-5 pb-2">
+        <div className="flex gap-1.5">
           {["tier", "date", "time", "details"].map((s, i) => (
             <div
               key={s}
               className={cn(
-                "h-1.5 flex-1 rounded-full transition-all duration-300 ease-out",
+                "h-1 flex-1 rounded-full transition-all duration-400 ease-in-out",
                 ["tier", "date", "time", "details"].indexOf(step) >= i
                   ? "bg-accent"
                   : "bg-muted"
@@ -310,14 +317,14 @@ export default function CustomerPage() {
         </div>
       </div>
 
-      <main className="max-w-md mx-auto px-6 py-6">
+      <main className="max-w-md mx-auto px-6 py-8">
         {/* Step: Tier */}
         {step === "tier" && (
           <div>
-            <h2 className="text-xl font-display font-semibold text-foreground mb-4">
+            <h2 className="text-xl font-display font-semibold text-foreground tracking-tight mb-5">
               Choose your wash
             </h2>
-            <div className="space-y-3">
+            <div className="space-y-4">
               {tiers.map((tier) => (
                 <WashTierCard
                   key={tier.id}
@@ -334,23 +341,23 @@ export default function CustomerPage() {
         {/* Step: Date */}
         {step === "date" && (
           <div>
-            <h2 className="text-xl font-display font-semibold text-foreground mb-4">
+            <h2 className="text-xl font-display font-semibold text-foreground tracking-tight mb-5">
               Pick a date
             </h2>
-            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-7">
+            <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-4 md:grid-cols-7">
               {dates.map((d) => (
                 <button
                   key={d.value}
                   onClick={() => handleDateSelect(d.value)}
                   className={cn(
-                    "rounded-xl border p-3 text-center transition-all",
+                    "rounded-xl border p-3.5 text-center transition-all duration-250 ease-in-out",
                     selectedDate === d.value
-                      ? "border-accent bg-accent/5"
-                      : "border-border hover:border-muted-foreground/30"
+                      ? "border-accent/40 bg-accent/5 shadow-card-sm"
+                      : "border-border hover:border-accent/20 hover:shadow-card-sm hover:-translate-y-0.5"
                   )}
                 >
                   <p className="text-sm font-medium text-foreground">{d.label}</p>
-                  <p className="text-xs text-muted-foreground">{d.date}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">{d.date}</p>
                 </button>
               ))}
             </div>
@@ -360,10 +367,10 @@ export default function CustomerPage() {
         {/* Step: Time */}
         {step === "time" && (
           <div>
-            <h2 className="text-xl font-display font-semibold text-foreground mb-1">
+            <h2 className="text-xl font-display font-semibold text-foreground tracking-tight mb-1.5">
               Select a time
             </h2>
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-5">
               <p className="text-sm text-muted-foreground">
                 {dates.find((d) => d.value === selectedDate)?.date}
               </p>
@@ -374,23 +381,23 @@ export default function CustomerPage() {
               )}
             </div>
             {loading ? (
-              <div className="flex items-center justify-center py-12">
+              <div className="flex items-center justify-center py-16">
                 <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
               </div>
             ) : (
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-3 gap-2.5">
                 {slots.map((slot) => (
                   <button
                     key={slot.time}
                     onClick={() => slot.available && handleTimeSelect(slot.time)}
                     disabled={!slot.available}
                     className={cn(
-                      "h-12 rounded-lg border text-sm font-medium transition-all",
+                      "h-12 rounded-xl border text-sm font-medium transition-all duration-250 ease-in-out",
                       !slot.available && "opacity-30 cursor-not-allowed bg-muted",
                       slot.available && selectedTime === slot.time
-                        ? "border-accent bg-accent/5 text-accent"
+                        ? "border-accent/40 bg-accent/5 text-accent shadow-card-sm"
                         : slot.available
-                        ? "border-border text-foreground hover:border-muted-foreground/30"
+                        ? "border-border text-foreground hover:border-accent/20 hover:-translate-y-0.5 hover:shadow-card-sm"
                         : "border-border text-muted-foreground"
                     )}
                   >
@@ -405,26 +412,29 @@ export default function CustomerPage() {
         {/* Step: Details */}
         {step === "details" && (
           <div>
-            <h2 className="text-xl font-display font-semibold text-foreground mb-4">
+            <h2 className="text-xl font-display font-semibold text-foreground tracking-tight mb-5">
               Your details
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-5">
               {/* Summary — shown first so price/tier is visible before committing */}
-              <div className="rounded-xl glass-card border-accent/15 bg-gradient-to-br from-cream-50/60 to-[var(--glass-bg)] p-4 space-y-2 text-sm">
+              <div className="rounded-xl glass-card border-accent/15 bg-gradient-to-br from-cream-50/60 to-[var(--glass-bg)] p-5 space-y-3 text-sm">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Wash</span>
                   <span className="font-medium">{selectedTier?.name}</span>
                 </div>
+                <div className="h-px bg-border/40" />
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Price</span>
                   <span className="font-semibold text-accent">{selectedTier && formatZAR(selectedTier.price_zar)}</span>
                 </div>
+                <div className="h-px bg-border/40" />
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Date</span>
                   <span className="font-medium">
                     {dates.find((d) => d.value === selectedDate)?.date}
                   </span>
                 </div>
+                <div className="h-px bg-border/40" />
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Time</span>
                   <span className="font-medium">{selectedTime}</span>
@@ -432,49 +442,49 @@ export default function CustomerPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-foreground mb-1.5">
+                <label className="block text-sm font-medium text-foreground mb-2">
                   Name
                 </label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => { setName(e.target.value); setErrors((p) => ({ ...p, name: "" })); }}
                     placeholder="Your name"
                     className={cn(
-                      "w-full h-12 pl-10 pr-4 rounded-lg border border-white/40 bg-[var(--glass-bg)] backdrop-blur-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.5)]",
+                      "w-full h-12 pl-11 pr-4 rounded-xl border border-white/40 bg-[var(--glass-bg)] backdrop-blur-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] transition-all duration-250",
                       errors.name && "border-destructive"
                     )}
                   />
                 </div>
-                {errors.name && <p className="text-destructive text-xs mt-1">{errors.name}</p>}
+                {errors.name && <p className="text-destructive text-xs mt-1.5">{errors.name}</p>}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-foreground mb-1.5">
+                <label className="block text-sm font-medium text-foreground mb-2">
                   Phone Number
                 </label>
                 <div className="relative">
-                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                   <input
                     type="tel"
                     value={phone}
                     onChange={(e) => { setPhone(e.target.value); setErrors((p) => ({ ...p, phone: "" })); }}
                     placeholder="082 123 4567"
                     className={cn(
-                      "w-full h-12 pl-10 pr-4 rounded-lg border border-white/40 bg-[var(--glass-bg)] backdrop-blur-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.5)]",
+                      "w-full h-12 pl-11 pr-4 rounded-xl border border-white/40 bg-[var(--glass-bg)] backdrop-blur-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] transition-all duration-250",
                       errors.phone && "border-destructive"
                     )}
                   />
                 </div>
-                {errors.phone && <p className="text-destructive text-xs mt-1">{errors.phone}</p>}
+                {errors.phone && <p className="text-destructive text-xs mt-1.5">{errors.phone}</p>}
               </div>
 
               <button
                 onClick={handleSubmitBooking}
                 disabled={loading}
-                className="w-full h-12 rounded-lg glossy-btn text-accent-foreground font-semibold flex items-center justify-center gap-2 active:scale-[0.98] transition-all disabled:opacity-50"
+                className="w-full h-14 rounded-xl glossy-btn text-accent-foreground font-semibold text-base flex items-center justify-center gap-2 disabled:opacity-50 mt-2"
               >
                 {loading ? (
                   <>

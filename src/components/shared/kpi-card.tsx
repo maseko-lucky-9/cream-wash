@@ -15,9 +15,9 @@ interface KpiCardProps {
 
 function KpiSkeleton() {
   return (
-    <div className="rounded-xl bg-card border border-border shadow-card-sm p-4">
-      <div className="flex items-center gap-2.5 mb-3">
-        <div className="w-8 h-8 rounded-lg skeleton shrink-0" />
+    <div className="rounded-xl bg-card border border-border shadow-card-sm p-5">
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-9 h-9 rounded-lg skeleton shrink-0" />
         <div className="h-3.5 w-24 rounded-md skeleton" />
       </div>
       <div className="h-9 w-28 rounded-lg skeleton" />
@@ -41,8 +41,8 @@ export function KpiCard({
       return;
     }
 
-    const duration = 300;
-    const steps = 20;
+    const duration = 400;
+    const steps = 24;
     const stepDuration = duration / steps;
     let current = 0;
     const increment = value / steps;
@@ -63,9 +63,9 @@ export function KpiCard({
   if (loading) return <KpiSkeleton />;
 
   return (
-    <div className="rounded-xl bg-card border border-border shadow-card-sm p-4">
-      <div className="flex items-center gap-2.5 mb-2">
-        <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center shrink-0">
+    <div className="rounded-xl bg-card border border-border shadow-card-sm hover:shadow-card-md transition-shadow duration-300 ease-in-out p-5">
+      <div className="flex items-center gap-3 mb-3">
+        <div className="w-9 h-9 rounded-lg bg-muted/70 flex items-center justify-center shrink-0">
           <Icon className={cn("w-[18px] h-[18px]", color)} aria-hidden="true" />
         </div>
         <span className="text-kpi-label text-muted-foreground">{label}</span>

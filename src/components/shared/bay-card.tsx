@@ -50,14 +50,14 @@ export function BayCard({ bay, currentJob, onComplete, compact = false }: BayCar
   }
 
   return (
-    <div className="rounded-xl bg-card border border-border shadow-card-sm p-4 transition-shadow">
-      <div className="flex items-center justify-between mb-3">
-        <h3 className="font-sans font-semibold text-sm text-foreground">
+    <div className="rounded-xl bg-card border border-border shadow-card-sm hover:shadow-card-md transition-shadow duration-300 ease-in-out p-5">
+      <div className="flex items-center justify-between mb-3.5">
+        <h3 className="font-sans font-semibold text-sm text-foreground tracking-tight">
           {bay.name}
         </h3>
         <span
           className={cn(
-            "inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full",
+            "inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full",
             isActive
               ? "bg-status-active/10 text-status-active"
               : "bg-status-idle/10 text-status-idle"
@@ -77,7 +77,7 @@ export function BayCard({ bay, currentJob, onComplete, compact = false }: BayCar
 
       {isActive && currentJob ? (
         <>
-          <div className="space-y-1.5 mb-3">
+          <div className="space-y-2 mb-4">
             <div className="flex items-center gap-2 text-sm text-foreground">
               <Car className="w-4 h-4 text-muted-foreground shrink-0" aria-hidden="true" />
               <span className="font-medium truncate">{currentJob.customer_name}</span>
@@ -102,7 +102,7 @@ export function BayCard({ bay, currentJob, onComplete, compact = false }: BayCar
             <button
               onClick={() => onComplete(currentJob.id)}
               aria-label={`Mark ${currentJob.customer_name}'s wash done`}
-              className="w-full h-14 rounded-lg bg-status-idle text-white font-semibold text-sm flex items-center justify-center gap-2 hover:bg-status-idle/90 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-status-idle/50 focus-visible:ring-offset-2 transition-all duration-150"
+              className="w-full h-14 rounded-xl bg-status-idle text-white font-semibold text-sm flex items-center justify-center gap-2 hover:bg-status-idle/90 hover:-translate-y-0.5 hover:shadow-card-md active:scale-[0.98] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-status-idle/50 focus-visible:ring-offset-2 transition-all duration-250 ease-in-out"
             >
               <CheckCircle className="w-5 h-5" aria-hidden="true" />
               Mark Done
@@ -110,7 +110,7 @@ export function BayCard({ bay, currentJob, onComplete, compact = false }: BayCar
           )}
         </>
       ) : (
-        <div className="flex flex-col items-center py-4 gap-2 text-center">
+        <div className="flex flex-col items-center py-5 gap-2.5 text-center">
           <div className="w-10 h-10 rounded-full bg-muted/60 flex items-center justify-center">
             <Car className="w-5 h-5 text-muted-foreground/40" aria-hidden="true" />
           </div>

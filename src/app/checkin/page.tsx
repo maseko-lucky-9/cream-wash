@@ -76,34 +76,34 @@ export default function CheckInPage() {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6 text-center relative">
         <div className="fixed top-1/4 left-1/3 w-[250px] h-[250px] rounded-full bg-accent/[0.04] blur-[100px] pointer-events-none" aria-hidden="true" />
-        <div className="w-16 h-16 rounded-full bg-status-idle/10 glass-surface flex items-center justify-center mb-6 animate-scale-check">
+        <div className="w-20 h-20 rounded-full bg-status-idle/10 glass-surface flex items-center justify-center mb-8 animate-scale-check">
           <Check className="w-10 h-10 text-status-idle" strokeWidth={2.5} />
         </div>
-        <h1 className="text-2xl font-display font-bold text-foreground mb-2 animate-fade-up">
+        <h1 className="text-2xl font-display font-bold text-foreground tracking-tight mb-2 animate-fade-up">
           You are checked in
         </h1>
-        <p className="text-muted-foreground mb-6">
+        <p className="text-muted-foreground mb-10 leading-relaxed">
           {selectedTier?.name} Wash for {name}
         </p>
 
-        <div className="w-full max-w-sm space-y-4 mb-8">
-          <div className="rounded-xl glass-card p-6 text-center">
-            <p className="text-kpi-label text-muted-foreground mb-1">
+        <div className="w-full max-w-sm space-y-4 mb-10">
+          <div className="rounded-xl glass-card p-7 text-center">
+            <p className="text-kpi-label text-muted-foreground mb-2">
               Your position
             </p>
             <p className="text-kpi tabular-nums text-accent">#{queuePosition}</p>
           </div>
-          <div className="rounded-xl glass-card p-6 text-center">
-            <p className="text-kpi-label text-muted-foreground mb-1">
+          <div className="rounded-xl glass-card p-7 text-center">
+            <p className="text-kpi-label text-muted-foreground mb-2">
               Estimated wait
             </p>
-            <p className="text-2xl font-semibold tabular-nums text-foreground">
+            <p className="text-2xl font-semibold tabular-nums text-foreground tracking-tight">
               ~{formatDuration(estimatedWait)}
             </p>
           </div>
         </div>
 
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-muted-foreground leading-relaxed">
           Please wait in the area. We will call your name.
         </p>
       </div>
@@ -111,28 +111,28 @@ export default function CheckInPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background pb-20 relative">
+    <div className="min-h-screen bg-background pb-24 relative">
       <div className="fixed top-0 right-1/4 w-[300px] h-[300px] rounded-full bg-accent/[0.03] blur-[100px] pointer-events-none" aria-hidden="true" />
       {/* Header */}
-      <header className="px-6 pt-10 pb-6 text-center relative">
-        <div className="flex items-center justify-center gap-2 mb-2">
+      <header className="px-6 pt-14 pb-8 text-center relative" style={{ background: 'var(--gradient-hero)' }}>
+        <div className="flex items-center justify-center gap-2 mb-3 animate-fade-up">
           <Sparkles className="w-5 h-5 text-accent" />
-          <span className="text-sm font-medium text-accent tracking-wide uppercase">
+          <span className="text-sm font-semibold text-accent tracking-widest uppercase">
             Cream Car Wash
           </span>
         </div>
-        <h1 className="text-2xl font-display font-bold text-foreground">
+        <h1 className="text-3xl font-display font-bold text-foreground tracking-tight animate-fade-up-1">
           Walk-In Check-In
         </h1>
-        <p className="text-sm text-muted-foreground mt-1">
+        <p className="text-sm text-muted-foreground mt-2 leading-relaxed animate-fade-up-2">
           {step === "tier" ? "Select your wash package" : "Enter your details"}
         </p>
       </header>
 
-      <main className="max-w-md mx-auto px-6 pb-8">
+      <main className="max-w-md mx-auto px-6 pt-8 pb-8">
         {/* Step: Tier */}
         {step === "tier" && (
-          <div className="space-y-3">
+          <div className="space-y-4 animate-fade-up">
             {tiers.map((tier) => (
               <WashTierCard
                 key={tier.id}
@@ -146,58 +146,58 @@ export default function CheckInPage() {
 
         {/* Step: Details */}
         {step === "details" && (
-          <div className="space-y-4">
+          <div className="space-y-5 animate-fade-up">
             <button
               onClick={() => setStep("tier")}
-              className="text-sm text-accent font-medium mb-2"
+              className="text-sm text-accent font-medium mb-1 hover:text-accent/80 transition-colors duration-200"
             >
-              Change wash: {selectedTier?.name}
+              ← Change wash: {selectedTier?.name}
             </button>
 
             <div>
-              <label className="block text-sm font-medium text-foreground mb-1.5">
+              <label className="block text-sm font-medium text-foreground mb-2">
                 Name
               </label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => { setName(e.target.value); setErrors((p) => ({ ...p, name: "" })); }}
                   placeholder="Your name"
                   className={cn(
-                    "w-full h-12 pl-10 pr-4 rounded-lg border border-white/40 bg-[var(--glass-bg)] backdrop-blur-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.5)]",
+                    "w-full h-12 pl-11 pr-4 rounded-xl border border-white/40 bg-[var(--glass-bg)] backdrop-blur-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] transition-all duration-250",
                     errors.name && "border-destructive"
                   )}
                 />
               </div>
-              {errors.name && <p className="text-destructive text-xs mt-1">{errors.name}</p>}
+              {errors.name && <p className="text-destructive text-xs mt-1.5">{errors.name}</p>}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-foreground mb-1.5">
+              <label className="block text-sm font-medium text-foreground mb-2">
                 Phone Number
               </label>
               <div className="relative">
-                <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
                   type="tel"
                   value={phone}
                   onChange={(e) => { setPhone(e.target.value); setErrors((p) => ({ ...p, phone: "" })); }}
                   placeholder="082 123 4567"
                   className={cn(
-                    "w-full h-12 pl-10 pr-4 rounded-lg border border-white/40 bg-[var(--glass-bg)] backdrop-blur-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.5)]",
+                    "w-full h-12 pl-11 pr-4 rounded-xl border border-white/40 bg-[var(--glass-bg)] backdrop-blur-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] transition-all duration-250",
                     errors.phone && "border-destructive"
                   )}
                 />
               </div>
-              {errors.phone && <p className="text-destructive text-xs mt-1">{errors.phone}</p>}
+              {errors.phone && <p className="text-destructive text-xs mt-1.5">{errors.phone}</p>}
             </div>
 
             <button
               onClick={handleCheckIn}
               disabled={loading}
-              className="w-full h-12 rounded-lg glossy-btn text-accent-foreground font-semibold flex items-center justify-center gap-2 active:scale-[0.98] transition-all disabled:opacity-50 mt-4"
+              className="w-full h-14 rounded-xl glossy-btn text-accent-foreground font-semibold text-base flex items-center justify-center gap-2 disabled:opacity-50 mt-2"
             >
               {loading ? (
                 <>

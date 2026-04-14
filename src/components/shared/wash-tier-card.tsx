@@ -25,31 +25,36 @@ export function WashTierCard({
       disabled={!onSelect}
       aria-pressed={onSelect ? selected : undefined}
       className={cn(
-        "w-full text-left rounded-xl border p-4 transition-all duration-200 bg-card relative overflow-hidden",
+        "w-full text-left rounded-xl border p-5 transition-all duration-300 ease-in-out bg-card relative overflow-hidden",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2",
-        onSelect && "hover:shadow-card-hover hover:-translate-y-0.5 active:shadow-card-active active:scale-[0.98]",
+        onSelect && "hover:shadow-card-hover hover:-translate-y-1 active:shadow-card-active active:scale-[0.98] active:translate-y-0",
         selected
           ? "border-accent/40 shadow-card-md bg-[image:var(--gradient-card-selected)]"
-          : "border-border shadow-card-sm",
+          : "border-border shadow-card-sm hover:border-accent/20",
         !onSelect && "cursor-default",
-        compact && "p-3"
+        compact && "p-4"
       )}
     >
+      {/* Subtle inner highlight on hover — shown via the selected gradient already; add a shimmer overlay */}
+      {selected && (
+        <span className="absolute inset-0 rounded-xl pointer-events-none ring-1 ring-inset ring-accent/20" aria-hidden="true" />
+      )}
+
       {/* Right-top indicator: popular badge OR selected checkmark (mutually exclusive) */}
       {!selected && mostPopular && !compact && (
-        <span className="absolute top-3 right-3 inline-flex items-center text-[10px] font-semibold text-accent bg-accent/10 border border-accent/15 px-2 py-0.5 rounded-full tracking-wider uppercase">
+        <span className="absolute top-3.5 right-3.5 inline-flex items-center text-[10px] font-semibold text-accent bg-accent/10 border border-accent/15 px-2 py-0.5 rounded-full tracking-wider uppercase">
           Popular
         </span>
       )}
       {selected && !compact && (
-        <span className="absolute top-3 right-3 w-5 h-5 rounded-full bg-accent flex items-center justify-center">
+        <span className="absolute top-3.5 right-3.5 w-5 h-5 rounded-full bg-accent flex items-center justify-center shadow-sm">
           <Check className="w-3 h-3 text-white" strokeWidth={3} aria-hidden="true" />
         </span>
       )}
 
-      <div className="flex items-start justify-between mb-2">
+      <div className="flex items-start justify-between mb-2.5">
         <h3 className={cn(
-          "font-display font-semibold text-foreground pr-8",
+          "font-display font-semibold text-foreground pr-8 tracking-tight",
           compact ? "text-base" : "text-lg"
         )}>
           {tier.name}
@@ -64,7 +69,7 @@ export function WashTierCard({
       </div>
 
       {tier.description && !compact && (
-        <p className="text-sm text-muted-foreground mb-3 leading-relaxed">{tier.description}</p>
+        <p className="text-sm text-muted-foreground mb-3.5 leading-relaxed">{tier.description}</p>
       )}
 
       <div className="flex items-center gap-4 text-sm text-muted-foreground">
