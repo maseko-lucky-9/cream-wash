@@ -207,7 +207,7 @@ export default function CustomerPage() {
     return (
       <div className="min-h-screen bg-background pb-24">
         {/* Hero */}
-        <section className="px-6 pt-20 pb-16 text-center relative overflow-hidden" style={{ background: 'var(--gradient-hero)' }}>
+        <section className="px-6 pt-16 pb-12 text-center relative overflow-hidden" style={{ background: 'var(--gradient-hero)' }}>
           {/* Animated glow blobs */}
           <div className="absolute top-[-40px] left-1/2 w-[450px] h-[350px] rounded-full bg-accent/[0.05] blur-[100px] pointer-events-none animate-drift-1" aria-hidden="true" />
           <div className="absolute top-[60px] left-[15%] w-[200px] h-[200px] rounded-full bg-gold-400/[0.06] blur-[80px] pointer-events-none animate-drift-2" aria-hidden="true" />
@@ -245,7 +245,7 @@ export default function CustomerPage() {
         {/* Tier cards */}
         <section className="px-6 pb-16 relative">
           <div className="section-divider" />
-          <h2 className="text-2xl font-display font-semibold text-foreground tracking-tight mb-2 text-center pt-12">
+          <h2 className="text-2xl font-display font-semibold text-foreground tracking-tight mb-2 text-center pt-8">
             Our Wash Packages
           </h2>
           <div className="w-12 h-0.5 bg-gradient-to-r from-accent/10 via-accent/50 to-accent/10 mx-auto mb-8 rounded-full" />

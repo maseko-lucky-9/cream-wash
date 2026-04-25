@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { LogOut, Car, DollarSign, Clock, BarChart3, Loader2 } from "lucide-react";
+import { LogOut, Car, DollarSign, Clock, BarChart3, Loader2, CalendarDays } from "lucide-react";
+import { format } from "date-fns";
 import { PinPad } from "@/components/shared/pin-pad";
 import { KpiCard } from "@/components/shared/kpi-card";
 import { BayCard } from "@/components/shared/bay-card";
@@ -99,9 +100,12 @@ export default function OwnerPage() {
       <header className="sticky top-0 z-40 glass-surface border-b border-white/30 px-4 py-3">
         <div className="flex items-center justify-between max-w-lg mx-auto">
           <div>
-            <p className="text-sm text-muted-foreground">Dashboard</p>
             <p className="font-display font-semibold text-foreground">
               Cream Car Wash
+            </p>
+            <p className="flex items-center gap-1.5 text-xs text-muted-foreground mt-0.5">
+              <CalendarDays className="w-3.5 h-3.5" aria-hidden="true" />
+              {format(new Date(), "EEEE, d MMMM yyyy")}
             </p>
           </div>
           <button

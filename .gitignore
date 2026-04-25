@@ -41,3 +41,6 @@ next-env.d.ts
 .vercel
 .env
 .claude/settings.local.json
+
+# before/after screenshots (dev reference only)
+/screenshots

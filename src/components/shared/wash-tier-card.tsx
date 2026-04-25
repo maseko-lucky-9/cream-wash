@@ -42,7 +42,7 @@ export function WashTierCard({
 
       {/* Right-top indicator: popular badge OR selected checkmark (mutually exclusive) */}
       {!selected && mostPopular && !compact && (
-        <span className="absolute top-3.5 right-3.5 inline-flex items-center text-[10px] font-semibold text-accent bg-accent/10 border border-accent/15 px-2 py-0.5 rounded-full tracking-wider uppercase">
+        <span className="absolute top-3.5 right-3.5 inline-flex items-center text-[10px] font-bold text-accent-foreground bg-accent px-2.5 py-1 rounded-full tracking-widest uppercase shadow-sm">
           Popular
         </span>
       )}
@@ -60,7 +60,7 @@ export function WashTierCard({
           {tier.name}
         </h3>
         <span className={cn(
-          "font-sans font-semibold tabular-nums shrink-0",
+          "font-display font-bold tabular-nums shrink-0",
           compact ? "text-lg" : "text-xl",
           "text-accent"
         )}>
@@ -79,7 +79,7 @@ export function WashTierCard({
         </span>
         <span className="flex items-center gap-1.5">
           <Droplets className="w-4 h-4 shrink-0" aria-hidden="true" />
-          {tier.name}
+          {tier.sort_order === 1 ? "Exterior" : tier.sort_order === 2 ? "Exterior + Interior" : "Full Detail"}
         </span>
       </div>
     </button>
