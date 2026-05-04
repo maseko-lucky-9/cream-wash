@@ -78,7 +78,7 @@ const config: Config = {
         "kpi-label": ["0.875rem", { lineHeight: "1.4", fontWeight: "500" }],
       },
       boxShadow: {
-        "card-sm": "0 1px 2px rgba(28, 25, 23, 0.05)",
+        "card-sm": "0 1px 3px rgba(28, 25, 23, 0.09), 0 1px 2px rgba(28, 25, 23, 0.06)",
         "card-md": "0 2px 8px rgba(28, 25, 23, 0.08)",
         "card-lg": "0 4px 16px rgba(28, 25, 23, 0.12)",
         "card-hover": "0 8px 24px rgba(28, 25, 23, 0.11), 0 2px 6px rgba(28, 25, 23, 0.05)",

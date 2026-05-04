@@ -10,6 +10,7 @@ interface WashTierCardProps {
   onSelect?: (tier: WashTier) => void;
   compact?: boolean;
   mostPopular?: boolean;
+  isPremium?: boolean;
 }
 
 export function WashTierCard({
@@ -18,6 +19,7 @@ export function WashTierCard({
   onSelect,
   compact = false,
   mostPopular = false,
+  isPremium = false,
 }: WashTierCardProps) {
   return (
     <button
@@ -30,20 +32,32 @@ export function WashTierCard({
         onSelect && "hover:shadow-card-hover hover:-translate-y-1 active:shadow-card-active active:scale-[0.98] active:translate-y-0",
         selected
           ? "border-accent/40 shadow-card-md bg-[image:var(--gradient-card-selected)]"
+          : isPremium
+          ? "border-gold-500/40 shadow-[0_2px_12px_rgba(180,100,20,0.10),0_1px_3px_rgba(28,25,23,0.06)] hover:border-gold-500/60 hover:shadow-[0_8px_24px_rgba(180,100,20,0.18),0_2px_6px_rgba(28,25,23,0.06)]"
           : "border-border shadow-card-sm hover:border-accent/20",
         !onSelect && "cursor-default",
         compact && "p-4"
       )}
     >
+      {/* Premium: warm gold shimmer overlay */}
+      {isPremium && !selected && (
+        <span className="absolute inset-0 rounded-xl pointer-events-none bg-gradient-to-br from-gold-400/[0.06] via-transparent to-transparent" aria-hidden="true" />
+      )}
+
       {/* Subtle inner highlight on hover — shown via the selected gradient already; add a shimmer overlay */}
       {selected && (
         <span className="absolute inset-0 rounded-xl pointer-events-none ring-1 ring-inset ring-accent/20" aria-hidden="true" />
       )}
 
-      {/* Right-top indicator: popular badge OR selected checkmark (mutually exclusive) */}
+      {/* Right-top indicator: popular badge OR premium badge OR selected checkmark (mutually exclusive) */}
       {!selected && mostPopular && !compact && (
         <span className="absolute top-3.5 right-3.5 inline-flex items-center text-[10px] font-bold text-accent-foreground bg-accent px-2.5 py-1 rounded-full tracking-widest uppercase shadow-sm">
           Popular
+        </span>
+      )}
+      {!selected && isPremium && !mostPopular && !compact && (
+        <span className="absolute top-3.5 right-3.5 inline-flex items-center text-[10px] font-bold text-white bg-gradient-to-r from-gold-400 to-gold-600 px-2.5 py-1 rounded-full tracking-widest uppercase shadow-sm">
+          Premium
         </span>
       )}
       {selected && !compact && (

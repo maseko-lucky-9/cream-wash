@@ -138,6 +138,8 @@ export default function CheckInPage() {
                 key={tier.id}
                 tier={tier}
                 selected={selectedTier?.id === tier.id}
+                mostPopular={tier.sort_order === 2}
+                isPremium={tier.sort_order === 3}
                 onSelect={handleTierSelect}
               />
             ))}

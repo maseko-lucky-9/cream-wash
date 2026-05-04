@@ -255,6 +255,7 @@ export default function CustomerPage() {
                 <WashTierCard
                   tier={tier}
                   mostPopular={tier.sort_order === 2}
+                  isPremium={tier.sort_order === 3}
                   onSelect={() => handleStartBooking(tier)}
                 />
               </div>
@@ -331,6 +332,7 @@ export default function CustomerPage() {
                   tier={tier}
                   selected={selectedTier?.id === tier.id}
                   mostPopular={tier.sort_order === 2}
+                  isPremium={tier.sort_order === 3}
                   onSelect={handleTierSelect}
                 />
               ))}
