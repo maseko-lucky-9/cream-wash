@@ -1,55 +1,35 @@
 import { NextResponse } from "next/server";
-import { createServerClient } from "@/lib/supabase";
+import { getDB } from "@/lib/mock-db";
 
 export async function PATCH(
   request: Request,
   { params }: { params: { id: string } }
 ) {
   try {
-    await request.json(); // consume body (employee_id for audit trail)
-    const supabase = createServerClient();
+    await request.json();
+    const db = getDB();
     const jobId = params.id;
 
-    // Get the job to find bay_id
-    const { data: existingJob } = await supabase
-      .from("jobs")
-      .select("bay_id")
-      .eq("id", jobId)
-      .single();
+    const job = db.jobs.find((j) => j.id === jobId && j.status === "in_progress");
+    if (!job) {
+      return NextResponse.json({ error: "Job not found or not in progress" }, { status: 404 });
+    }
 
-    // Update the job
-    const { data: job, error: jobErr } = await supabase
-      .from("jobs")
-      .update({
-        status: "completed",
-        completed_at: new Date().toISOString(),
-      })
-      .eq("id", jobId)
-      .eq("status", "in_progress")
-      .select()
-      .single();
+    const bayId = job.bay_id;
+    job.status = "completed";
+    job.completed_at = new Date().toISOString();
 
-    if (jobErr) throw jobErr;
-
-    // Update the bay back to idle
-    if (existingJob?.bay_id) {
-      const { error: bayErr } = await supabase
-        .from("bays")
-        .update({
-          status: "idle",
-          current_job_id: null,
-        })
-        .eq("id", existingJob.bay_id);
-
-      if (bayErr) throw bayErr;
+    if (bayId) {
+      const bay = db.bays.find((b) => b.id === bayId);
+      if (bay) {
+        bay.status = "idle";
+        bay.current_job_id = null;
+      }
     }
 
     return NextResponse.json({ job });
   } catch (error) {
     console.error("Complete job error:", error);
-    return NextResponse.json(
-      { error: "Failed to complete job" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to complete job" }, { status: 500 });
   }
 }

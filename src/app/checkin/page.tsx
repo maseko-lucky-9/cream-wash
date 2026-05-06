@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { Check, User, Phone, Loader2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { WashTierCard } from "@/components/shared/wash-tier-card";
-import { supabase } from "@/lib/supabase";
 import { cn, isValidSAPhone, formatDuration } from "@/lib/utils";
 import type { WashTier } from "@/lib/database.types";
 
@@ -22,13 +21,9 @@ export default function CheckInPage() {
   const [estimatedWait, setEstimatedWait] = useState(0);
 
   useEffect(() => {
-    supabase
-      .from("wash_tiers")
-      .select("*")
-      .order("sort_order")
-      .then(({ data }) => {
-        if (data) setTiers(data);
-      });
+    fetch("/api/staff/data")
+      .then((r) => r.json())
+      .then(({ tiers }) => setTiers(tiers));
   }, []);
 
   const handleTierSelect = (tier: WashTier) => {

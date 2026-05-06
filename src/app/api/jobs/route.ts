@@ -1,64 +1,58 @@
 import { NextResponse } from "next/server";
-import { createServerClient } from "@/lib/supabase";
+import { getDB } from "@/lib/mock-db";
+
+export async function GET() {
+  const db = getDB();
+  const tierMap = Object.fromEntries(db.wash_tiers.map((t) => [t.id, t]));
+  const jobs = db.jobs
+    .filter((j) => j.status === "queued" || j.status === "in_progress")
+    .sort((a, b) => new Date(a.queued_at).getTime() - new Date(b.queued_at).getTime())
+    .map((j) => ({ ...j, wash_tier: tierMap[j.wash_tier_id] }));
+
+  return NextResponse.json({ jobs });
+}
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { customer_name, customer_phone, wash_tier_id, plate_number, source } =
-      body;
+    const { customer_name, customer_phone, wash_tier_id, plate_number, source } = body;
 
     if (!customer_name || !customer_phone || !wash_tier_id || !source) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    const supabase = createServerClient();
+    const db = getDB();
+    const tier = db.wash_tiers.find((t) => t.id === wash_tier_id);
+    if (!tier) {
+      return NextResponse.json({ error: "Invalid wash tier" }, { status: 400 });
+    }
 
-    const { data: job, error } = await supabase
-      .from("jobs")
-      .insert({
-        customer_name,
-        customer_phone,
-        wash_tier_id,
-        plate_number: plate_number || null,
-        source,
-        status: "queued",
-      })
-      .select()
-      .single();
+    const job = {
+      id: crypto.randomUUID(),
+      customer_name,
+      customer_phone,
+      wash_tier_id,
+      plate_number: plate_number || null,
+      source,
+      status: "queued" as const,
+      bay_id: null,
+      employee_id: null,
+      queued_at: new Date().toISOString(),
+      started_at: null,
+      completed_at: null,
+      created_at: new Date().toISOString(),
+    };
 
-    if (error) throw error;
+    db.jobs.push(job);
 
-    // Calculate queue position
-    const { count } = await supabase
-      .from("jobs")
-      .select("*", { count: "exact", head: true })
-      .eq("status", "queued");
-
-    // Get tier duration for wait estimate
-    const { data: tier } = await supabase
-      .from("wash_tiers")
-      .select("duration_minutes")
-      .eq("id", wash_tier_id)
-      .single();
-
-    const queuePosition = count || 1;
-    const estimatedWait = queuePosition * (tier?.duration_minutes || 30);
+    const queueLength = db.jobs.filter((j) => j.status === "queued").length;
+    const estimatedWait = queueLength * tier.duration_minutes;
 
     return NextResponse.json({
-      job: {
-        ...job,
-        queue_position: queuePosition,
-        estimated_wait_minutes: estimatedWait,
-      },
+      job: { ...job, queue_position: queueLength, estimated_wait_minutes: estimatedWait },
     });
   } catch (error) {
     console.error("Create job error:", error);
-    return NextResponse.json(
-      { error: "Failed to create job" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to create job" }, { status: 500 });
   }
 }

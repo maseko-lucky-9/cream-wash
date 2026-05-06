@@ -8,7 +8,6 @@ import { BayCard } from "@/components/shared/bay-card";
 import { QueueItem } from "@/components/shared/queue-item";
 import { AssignBaySheet } from "@/components/shared/assign-bay-sheet";
 import { useMultiRealtime } from "@/lib/hooks/use-realtime";
-import { supabase } from "@/lib/supabase";
 import type { Employee, Bay, Job, WashTier } from "@/lib/database.types";
 
 type JobWithTier = Job & { wash_tier?: WashTier };
@@ -57,31 +56,20 @@ export default function StaffPage() {
   const fetchData = useCallback(async () => {
     if (!employee) return;
 
-    const [baysRes, jobsRes, tiersRes] = await Promise.all([
-      supabase.from("bays").select("*").order("name"),
-      supabase.from("jobs").select("*").in("status", ["queued", "in_progress"]).order("queued_at"),
-      supabase.from("wash_tiers").select("*").order("sort_order"),
-    ]);
+    const res = await fetch("/api/staff/data");
+    const { bays: allBays, jobs: allJobs, tiers: allTiers } = await res.json();
 
-    const allTiers = tiersRes.data || [];
     setTiers(allTiers);
-    const tierMap: Record<string, WashTier> = {};
-    allTiers.forEach((t) => (tierMap[t.id] = t));
 
-    const allJobs = (jobsRes.data || []).map((j) => ({
-      ...j,
-      wash_tier: tierMap[j.wash_tier_id],
+    const baysWithJob = (allBays as Bay[]).map((bay) => ({
+      ...bay,
+      currentJob: bay.current_job_id
+        ? (allJobs as (Job & { wash_tier?: WashTier })[]).find((j) => j.id === bay.current_job_id) || null
+        : null,
     }));
 
-    const allBays = (baysRes.data || []).map((bay) => {
-      const currentJob = bay.current_job_id
-        ? allJobs.find((j) => j.id === bay.current_job_id) || null
-        : null;
-      return { ...bay, currentJob };
-    });
-
-    setBays(allBays);
-    setQueue(allJobs.filter((j) => j.status === "queued"));
+    setBays(baysWithJob);
+    setQueue((allJobs as (Job & { wash_tier?: WashTier })[]).filter((j) => j.status === "queued"));
   }, [employee]);
 
   useEffect(() => {

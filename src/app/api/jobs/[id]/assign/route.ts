@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createServerClient } from "@/lib/supabase";
+import { getDB } from "@/lib/mock-db";
 
 export async function PATCH(
   request: Request,
@@ -15,42 +15,28 @@ export async function PATCH(
       );
     }
 
-    const supabase = createServerClient();
+    const db = getDB();
     const jobId = params.id;
 
-    // Update the job
-    const { data: job, error: jobErr } = await supabase
-      .from("jobs")
-      .update({
-        bay_id,
-        employee_id,
-        status: "in_progress",
-        started_at: new Date().toISOString(),
-      })
-      .eq("id", jobId)
-      .eq("status", "queued")
-      .select()
-      .single();
+    const job = db.jobs.find((j) => j.id === jobId && j.status === "queued");
+    if (!job) {
+      return NextResponse.json({ error: "Job not found or not queued" }, { status: 404 });
+    }
 
-    if (jobErr) throw jobErr;
+    job.bay_id = bay_id;
+    job.employee_id = employee_id;
+    job.status = "in_progress";
+    job.started_at = new Date().toISOString();
 
-    // Update the bay
-    const { error: bayErr } = await supabase
-      .from("bays")
-      .update({
-        status: "in_progress",
-        current_job_id: jobId,
-      })
-      .eq("id", bay_id);
-
-    if (bayErr) throw bayErr;
+    const bay = db.bays.find((b) => b.id === bay_id);
+    if (bay) {
+      bay.status = "in_progress";
+      bay.current_job_id = jobId;
+    }
 
     return NextResponse.json({ job });
   } catch (error) {
     console.error("Assign job error:", error);
-    return NextResponse.json(
-      { error: "Failed to assign job" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to assign job" }, { status: 500 });
   }
 }
